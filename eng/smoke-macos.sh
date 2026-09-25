@@ -13,11 +13,12 @@ export PATH=$DOTNET_ROOT:$HOME/.dotnet/tools:$PATH
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT=${SMOKE_OUT:-/tmp/maui-smoke}
-mkdir -p "$OUT"
+mkdir -p "$OUT"; rm -f "$OUT"/*.log "$OUT"/tree.json   # no stale output from a previous run
 cd "$REPO_ROOT"
 
-EXTRA=()
-[[ "${VALIDATE_XCODE:-true}" == "false" ]] && EXTRA+=(-p:ValidateXcodeVersion=false)
+# Plain string, not an array: macOS's /bin/bash is 3.2, where expanding an empty array under `set -u` aborts the script.
+EXTRA=""
+[[ "${VALIDATE_XCODE:-true}" == "false" ]] && EXTRA="-p:ValidateXcodeVersion=false"
 APP_PID=""
 
 cleanup() {
@@ -32,10 +33,11 @@ fail() {
 }
 trap cleanup EXIT
 
-echo "==> dotnet $(dotnet --version), $(xcodebuild -version | head -1), macOS $(sw_vers -productVersion), maui CLI $(maui --version 2>/dev/null | cut -d+ -f1)"
+echo "==> dotnet $(dotnet --version), $(xcodebuild -version 2>/dev/null | sed -n 1p), macOS $(sw_vers -productVersion), maui CLI $(maui --version 2>/dev/null | cut -d+ -f1), bash $BASH_VERSION"
 
-echo "==> build src/MauiPlatforms.MacOS (Debug)"
-if ! dotnet build src/MauiPlatforms.MacOS/MauiPlatforms.MacOS.csproj -c Debug --nologo -v minimal "${EXTRA[@]}" > "$OUT/build.log" 2>&1; then
+echo "==> build src/MauiPlatforms.MacOS (Debug${EXTRA:+, $EXTRA})"
+# shellcheck disable=SC2086  # $EXTRA is deliberately unquoted (empty or a single flag)
+if ! dotnet build src/MauiPlatforms.MacOS/MauiPlatforms.MacOS.csproj -c Debug --nologo -v minimal $EXTRA > "$OUT/build.log" 2>&1; then
   grep -E 'error' "$OUT/build.log" | head -n 10
   fail "build failed (see $OUT/build.log)"
 fi
