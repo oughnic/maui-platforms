@@ -13,7 +13,7 @@ Versions: .NET SDK 11.0.100-rc.1.26425.128, MAUI 11.0.0-rc.1.26451.6, maui-labs 
 | WPF | win-x64 | ✅ cross-built on arm64 | not run (no x64 hardware here) | — |
 | GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ agent does not start with the new backend (F5/F6) |
 | GTK4 | linux-x64 | ✅ cross-compiled | not run | — |
-| macOS AppKit | osx-arm64 | not attempted (no Mac) | — | — |
+| macOS AppKit | osx-arm64 | ✅ GitHub Actions `macos-26` runner, workloads `macos` + `maui-tizen` | not yet (Mac access being set up) | — |
 | Default app (WinUI) | win-arm64 | ✅ Windows TFM only (`-p:TargetFrameworks=net11.0-windows10.0.19041.0`) | not run | agent added |
 
 ### GTK4 run
@@ -124,6 +124,13 @@ from NuGet). Everything else (JDK 21, Android SDK, emulator, licences) is green.
   `.claude/settings.json` registers it with an explicit `path`.
 - The plugin manifests are `plugins/<name>/plugin.json` rather than `.claude-plugin/plugin.json`; Claude Code should
   fall back to the marketplace entry as the manifest and auto-discover `skills/`.
+
+### F12. A `UseMaui` project on `net11.0-macos` needs the `maui-tizen` workload (or `maui`)
+
+The first CI run of the AppKit head failed with `NETSDK1147: To build this project, the following workloads must be
+installed: maui-tizen`. The `macos` workload only provides the TFM; the MAUI SDK packs come from the abstract `maui-core`
+workload, and the smallest concrete workload that carries them without extra platform packs is `maui-tizen`. Installing
+`macos maui-tizen` fixed it (`maui` would too, at a much larger download). `eng/setup-macos.sh` does the same.
 
 ### F11. WSL distro age matters
 

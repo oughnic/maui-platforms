@@ -18,7 +18,7 @@ packages taken from nuget.org.
 | `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine and built natively by CI on `windows-latest`; not yet run on x64 hardware |
 | `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | ✅ | ❌ | Built and run in WSL2 Ubuntu 24.04 (GTK 4.14); renders the page but no Shell navigation bar; the labs GTK DevFlow agent targets the old backend package ([details](docs/status.md)) |
 | `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ | Cross-compiled and built natively by CI on `ubuntu-24.04`; not yet run on x64 hardware |
-| `MauiPlatforms.MacOS` | osx-arm64 | ⏳ | ⏳ | ⏳ | Built by the `macos-26` CI job (first run failed on a missing workload, fixed); local run on an Apple Silicon Mac pending |
+| `MauiPlatforms.MacOS` | osx-arm64 | ✅ | ⏳ | ⏳ | Builds in CI on `macos-26` (Xcode 26); run + DevFlow on an Apple Silicon Mac (Stepney) pending |
 | `MauiPlatforms` (default app, WinUI) | win-arm64 | ✅ | ➖ | agent added | Windows TFM only; android/ios/maccatalyst need the full `maui` workload |
 
 | WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) |
