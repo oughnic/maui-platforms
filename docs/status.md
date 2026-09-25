@@ -26,8 +26,11 @@ Windows desktop through WSLg (title `MauiPlatforms (Ubuntu-24.04)`), see `docs/s
 - Differences from WPF/WinUI: **no Shell navigation bar or flyout button** is drawn for the single-item `AppShell`
   (WPF draws the "Home" bar with ☰), and the two-line "Welcome to / .NET Multi-platform App UI" label is left-aligned
   inside its centred block instead of centred. GTK's default light theme is used (WPF followed the Windows dark theme).
-- `libEGL warning … MESA: error: ZINK: failed to choose pdev` on startup is WSLg without GPU passthrough falling back
-  to software rendering; harmless.
+- `libEGL warning … MESA: error: ZINK: failed to choose pdev` on startup is GTK's GL renderer failing to open a GPU
+  through WSLg (`/dev/dxg` and the D3D12 libraries are present, but Mesa 25.2 cannot use them on this Arm64 box) and
+  falling back to software rendering. Harmless, and `GSK_RENDERER=cairo ./MauiPlatforms.Gtk4` skips the GL attempt for
+  a silent start (verified: zero log lines, app runs).
+- The first button click originally crashed the handler (F15); fixed by registering the labs Essentials.
 
 ### macOS AppKit run
 

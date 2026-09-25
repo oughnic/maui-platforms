@@ -50,4 +50,7 @@ Done. Open a new shell (or 'source ~/.bashrc') and run:
   cd $REPO_ROOT
   dotnet run --project src/MauiPlatforms.Gtk4 -r linux-$(uname -m | sed 's/aarch64/arm64/; s/x86_64/x64/')
 
+Under WSLg without a usable GPU the app starts with harmless libEGL/MESA warnings; 'export GSK_RENDERER=cairo'
+makes GTK skip the GL renderer and start silently.
+
 EOF

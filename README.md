@@ -87,7 +87,9 @@ dotnet run --project src/MauiPlatforms.Gtk4 -r linux-arm64   # or linux-x64
 ```
 
 WSLg shows the GTK window on the Windows desktop. Build from a Linux-filesystem copy of the repo (`~/maui-platforms`),
-not `/mnt/c/...`, so `bin/`/`obj/` do not collide with the Windows builds.
+not `/mnt/c/...`, so `bin/`/`obj/` do not collide with the Windows builds. If start-up prints `libEGL` / `MESA: error:
+ZINK` warnings (WSLg without a usable GPU), they are harmless; `export GSK_RENDERER=cairo` makes GTK skip the GL renderer
+and start silently.
 
 ### macOS (AppKit head)
 
