@@ -127,7 +127,7 @@ The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4
 ## Environment changes made on this machine
 
 - `maui` CLI updated to 0.1.0-preview.12; labs templates `maui-wpf` / `maui-linux-gtk4` and `Microsoft.Maui.Templates.net11` installed.
-- .NET 11 RC1 arm64 SDK installed **user-locally** in `C:\Users\Nicholas\.dotnet` with the `maui-windows` workload (removable; superseded by a machine-wide install).
+- .NET 11 RC1 arm64 SDK installed **user-locally** in `%USERPROFILE%\.dotnet` with the `maui-windows` workload (removable; superseded by a machine-wide install).
 - WSL distro `Ubuntu-24.04` added (root only, no user account yet; the default distro is still `Ubuntu`).
 - `.claude/skills/*` written by `maui devflow init`; `~/.maui/devflow/workspaces/*` state created by the CLI.
 
