@@ -19,10 +19,8 @@ cd "$REPO_ROOT"
 # Plain string, not an array: macOS's /bin/bash is 3.2, where expanding an empty array under `set -u` aborts the script.
 EXTRA=""
 [[ "${VALIDATE_XCODE:-true}" == "false" ]] && EXTRA="-p:ValidateXcodeVersion=false"
-APP_PID=""
 
 cleanup() {
-  [ -n "$APP_PID" ] && kill "$APP_PID" 2>/dev/null
   pkill -f 'MacOS/MauiPlatforms.MacOS' 2>/dev/null
   maui devflow broker stop >/dev/null 2>&1 || true
 }
@@ -47,22 +45,33 @@ APP=$(ls -d src/MauiPlatforms.MacOS/bin/Debug/net11.0-macos/osx-arm64/*.app 2>/d
 echo "==> start broker and launch $APP"
 maui devflow broker start >/dev/null 2>&1 || true
 pkill -f 'MacOS/MauiPlatforms.MacOS' 2>/dev/null || true
-"$APP/Contents/MacOS/MauiPlatforms.MacOS" > "$OUT/app.log" 2>&1 &
-APP_PID=$!
-disown "$APP_PID"   # so bash does not print "Terminated" when cleanup stops it
+# Launch through LaunchServices so the app lands in the GUI session and becomes active (the DevFlow agent starts on
+# activation); a bare ./MauiPlatforms.MacOS worked on a Mac with a logged-in user but never activated on a CI runner.
+open -n --stdout "$OUT/app.log" --stderr "$OUT/app.log" "$APP" || fail "open failed for $APP"
+BUNDLE_ID=$(defaults read "$PWD/$APP/Contents/Info" CFBundleIdentifier 2>/dev/null || echo com.companyname.mauiplatforms)
 
 echo "==> wait for the DevFlow agent (up to 60 s)"
 for i in $(seq 1 60); do
   if maui devflow list 2>/dev/null | grep -q '"platform": *"macOS"'; then break; fi
-  kill -0 "$APP_PID" 2>/dev/null || fail "app exited before the agent registered"
+  [ "$i" -gt 5 ] && ! pgrep -f 'MacOS/MauiPlatforms.MacOS' >/dev/null && fail "app exited before the agent registered"
   sleep 1
 done
 maui devflow list 2>/dev/null | grep -q '"platform": *"macOS"' || fail "DevFlow agent did not register with the broker"
 maui devflow list | grep -E '"(platform|appName|port|tfm)"' | sed -E 's/^\s+//'
 
-echo "==> check the page is in the visual tree"
-maui devflow ui tree --depth 8 > "$OUT/tree.json" 2>&1
-grep -q '"type": *"MainPage"' "$OUT/tree.json" || fail "MainPage not found in the DevFlow tree (see $OUT/tree.json)"
+echo "==> wait for MainPage to appear in the visual tree (up to 45 s)"
+# The agent registers before Shell has created and laid out the page, so poll rather than check once.
+for i in $(seq 1 45); do
+  maui devflow ui tree --depth 8 > "$OUT/tree.json" 2>&1
+  grep -q '"type": *"MainPage"' "$OUT/tree.json" && break
+  # nudge: bring the app to the front in case it is running but was never activated
+  if [ "$i" = 5 ] || [ "$i" = 20 ]; then osascript -e "tell application id \"$BUNDLE_ID\" to activate" >/dev/null 2>&1 || true; fi
+  sleep 1
+done
+if ! grep -q '"type": *"MainPage"' "$OUT/tree.json"; then
+  echo "--- element types in the tree ---"; grep -o '"type": *"[^"]*"' "$OUT/tree.json" | sort | uniq -c | sort -rn | head -n 15
+  fail "MainPage not found in the DevFlow tree after 45 s (see $OUT/tree.json)"
+fi
 
 echo "==> tap the counter button"
 TAP=$(maui devflow ui tap --text "Click me" 2>&1)
