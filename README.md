@@ -18,12 +18,12 @@ packages taken from nuget.org.
 | `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine and built natively by CI on `windows-latest`; not yet run on x64 hardware |
 | `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | ✅ | ❌ | Built and run in WSL2 Ubuntu 24.04 (GTK 4.14); renders the page but no Shell navigation bar; the labs GTK DevFlow agent targets the old backend package ([details](docs/status.md)) |
 | `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ | Cross-compiled and built natively by CI on `ubuntu-24.04`; not yet run on x64 hardware |
-| `MauiPlatforms.MacOS` | osx-arm64 | ✅ | ⏳ | ⏳ | Builds in CI on `macos-26` (Xcode 26); run + DevFlow on an Apple Silicon Mac (Stepney) pending |
+| `MauiPlatforms.MacOS` | osx-arm64 | ✅ | ✅ | ✅ | Builds in CI (`macos-26`) and on an M-series Mac; renders the default app natively; DevFlow sees the whole page and taps the button ([details](docs/status.md)) |
 | `MauiPlatforms` (default app, WinUI) | win-arm64 | ✅ | ➖ | agent added | Windows TFM only; android/ios/maccatalyst need the full `maui` workload |
 
-| WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) |
-| --- | --- |
-| ![Default MAUI app on the WPF backend](docs/screenshots/wpf-win-arm64.png) | ![Default MAUI app on the GTK4 backend](docs/screenshots/gtk4-linux-arm64.png) |
+| WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) | AppKit backend, osx-arm64 (after two DevFlow taps) |
+| --- | --- | --- |
+| ![Default MAUI app on the WPF backend](docs/screenshots/wpf-win-arm64.png) | ![Default MAUI app on the GTK4 backend](docs/screenshots/gtk4-linux-arm64.png) | ![Default MAUI app on the AppKit backend](docs/screenshots/macos-osx-arm64.png) |
 
 ## What is here
 
@@ -106,6 +106,9 @@ small `maui-tizen` workload (`maui` works too, at several times the download). T
 dotnet build src/MauiPlatforms.MacOS
 dotnet run --project src/MauiPlatforms.MacOS
 ```
+
+The .NET 11 RC1 macOS workload insists on Xcode 26.6; with Xcode 26.5 add `-p:ValidateXcodeVersion=false` to both
+commands (see finding F13). `eng/smoke-macos.sh` does the whole build, launch and DevFlow round-trip in one go.
 
 ## Running the heads
 

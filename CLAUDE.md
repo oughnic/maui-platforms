@@ -37,7 +37,7 @@ dotnet build src/MauiPlatforms.Wpf                     # Windows (arm64 host); a
 dotnet run   --project src/MauiPlatforms.Wpf
 dotnet build src/MauiPlatforms -f net11.0-windows10.0.19041.0 -p:TargetFrameworks=net11.0-windows10.0.19041.0
 dotnet run   --project src/MauiPlatforms.Gtk4 -r linux-arm64   # on Linux / WSL2 (see eng/setup-linux.sh)
-dotnet build src/MauiPlatforms.MacOS                   # on macOS only (Xcode + `dotnet workload install macos maui-tizen`)
+dotnet build src/MauiPlatforms.MacOS                   # on macOS only (Xcode 26.6 + `dotnet workload install macos maui-tizen`; Xcode 26.5 needs -p:ValidateXcodeVersion=false)
 ```
 
 `dotnet build MauiPlatforms.slnx` never fully succeeds on one OS — each head needs its own OS; build per project.

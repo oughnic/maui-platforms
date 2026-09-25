@@ -17,6 +17,13 @@
     <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
     <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
 
+    <!--
+      Microsoft.Maui.DevFlow.Agent.Core.targets (preview.12) only hooks MAUI's XAML AdditionalFiles pipeline for
+      android/ios/maccatalyst/windows TFMs; `macos` is not in the list, so Debug builds lose InitializeComponent
+      (dotnet/maui-labs#520). Release builds are unaffected because the source maps are Debug-only.
+    -->
+    <DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>
+
     <ApplicationTitle>MauiPlatforms</ApplicationTitle>
     <ApplicationId>com.companyname.mauiplatforms</ApplicationId>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -41,13 +48,18 @@
               Link="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <!-- Shared app resources -->
+  <!--
+    Shared app resources. Only MauiIcon is processed by the labs macOS targets (SVG -> .icns). MAUI's Resizetizer does
+    not run for the macos TFM, so MauiImage/MauiFont/MauiAsset items from the shared project never reach the bundle
+    (docs/status.md F14). The backend loads images from <bundle>/Contents/Resources/Images and fonts from
+    .../Fonts (ImageHandler, MacOSFontRegistrar), and BundleResource strips the leading "Resources\" from the Link
+    path, so bundle the shared files explicitly.
+  -->
   <ItemGroup>
     <MauiIcon Include="..\MauiPlatforms\Resources\AppIcon\appicon.svg" ForegroundFile="..\MauiPlatforms\Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-    <MauiImage Include="..\MauiPlatforms\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
-    <MauiImage Update="..\MauiPlatforms\Resources\Images\dotnet_bot.png" BaseSize="222,185" />
-    <MauiFont Include="..\MauiPlatforms\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
-    <MauiAsset Include="..\MauiPlatforms\Resources\Raw\**" Link="Resources\Raw\%(RecursiveDir)%(Filename)%(Extension)" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <BundleResource Include="..\MauiPlatforms\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
+    <BundleResource Include="..\MauiPlatforms\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
+    <BundleResource Include="..\MauiPlatforms\Resources\Raw\**" Link="Resources\Raw\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

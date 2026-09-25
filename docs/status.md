@@ -13,7 +13,7 @@ Versions: .NET SDK 11.0.100-rc.1.26425.128, MAUI 11.0.0-rc.1.26451.6, maui-labs 
 | WPF | win-x64 | ✅ cross-built on arm64 | not run (no x64 hardware here) | — |
 | GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ agent does not start with the new backend (F5/F6) |
 | GTK4 | linux-x64 | ✅ cross-compiled | not run | — |
-| macOS AppKit | osx-arm64 | ✅ GitHub Actions `macos-26` runner, workloads `macos` + `maui-tizen` | not yet (Mac access being set up) | — |
+| macOS AppKit | osx-arm64 | ✅ CI (`macos-26`, Xcode 26.6) and Stepney (Xcode 26.5 with `-p:ValidateXcodeVersion=false`) | ✅ default app renders (see "macOS AppKit run") | ✅ agent registers, full page in `ui tree`, `ui tap --text "Click me"` works |
 | Default app (WinUI) | win-arm64 | ✅ Windows TFM only (`-p:TargetFrameworks=net11.0-windows10.0.19041.0`) | not run | agent added |
 
 ### GTK4 run
@@ -28,6 +28,21 @@ Windows desktop through WSLg (title `MauiPlatforms (Ubuntu-24.04)`), see `docs/s
   inside its centred block instead of centred. GTK's default light theme is used (WPF followed the Windows dark theme).
 - `libEGL warning … MESA: error: ZINK: failed to choose pdev` on startup is WSLg without GPU passthrough falling back
   to software rendering; harmless.
+
+### macOS AppKit run
+
+Built and run on Stepney (Mac, Apple Silicon, macOS 26.6.2, Xcode 26.5, .NET SDK 11.0.100-rc.1 in `~/.dotnet` via
+`eng/setup-macos.sh`) over SSH with `-p:ValidateXcodeVersion=false` (F13) and the DevFlow XAML workaround (F5). The
+app bundle `bin/Debug/net11.0-macos/osx-arm64/MauiPlatforms.app` launches from the console user's session; see
+`docs/screenshots/macos-osx-arm64.png`.
+
+- Renders as a native AppKit window: Shell flyout button (☰) and "MauiPlatforms" title in the toolbar, then the page
+  (image, both labels, button) in a scroll view.
+- DevFlow is the best of the three backends here: the agent registers with the broker (`platform: "macOS"`), `ui tree`
+  shows the full hierarchy down to `MainPage → MacOSContainerView → ScrollView → VerticalStackLayout`, and
+  `ui tap --text "Click me"` succeeds twice, after which `ui query --type Button` reports `"Clicked 2 times"`.
+- The app log shows the backend's own diagnostics (`[WindowHandler.MapContent] page=AppShell, handler=ShellHandler`)
+  and the agent start (`Agent started on port 10223`).
 
 ## Findings
 
@@ -75,6 +90,11 @@ it instead adds `@(MauiXaml)` as untyped AdditionalFiles, and the MAUI XAML sour
 unaffected because `net11.0-windows` takes the other branch.
 
 Workaround in `src/MauiPlatforms.Gtk4/MauiPlatforms.Gtk4.csproj`: `<DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>`.
+
+**Also hits `net11.0-macos`** (the AppKit head): `macos` is missing from the same TFM list, so a Debug build on the Mac
+produced the identical six CS0103 errors. Release builds are unaffected because the source maps are Debug-only
+(`Microsoft.Maui.DevFlow.Agent.Core.props`), which is why the `-c Release` CI job passed. Same workaround applied to
+`src/MauiPlatforms.MacOS/MauiPlatforms.MacOS.csproj`; noted on dotnet/maui-labs#520.
 
 ### F6. `Microsoft.Maui.DevFlow.Agent.Gtk` depends on the superseded backend package
 
@@ -131,6 +151,14 @@ The first CI run of the AppKit head failed with `NETSDK1147: To build this proje
 installed: maui-tizen`. The `macos` workload only provides the TFM; the MAUI SDK packs come from the abstract `maui-core`
 workload, and the smallest concrete workload that carries them without extra platform packs is `maui-tizen`. Installing
 `macos maui-tizen` fixed it (`maui` would too, at a much larger download). `eng/setup-macos.sh` does the same.
+
+### F13. The .NET 11 RC1 macOS workload demands Xcode 26.6; Xcode 26.5 works with the check disabled
+
+`Microsoft.macOS.Sdk.net11.0_26.5` 26.5.12194-net11-rc.1 fails the build with
+`error : This version of .NET for macOS (26.5.12194-net11-rc.1) requires Xcode 26.6. The current version of Xcode is 26.5`
+(target `_ValidateXcodeVersion` in `Xamarin.Shared.Sdk.targets`). The GitHub `macos-26` runner has 26.6 so CI passes;
+Stepney has 26.5 and 26.2. Building with `-p:ValidateXcodeVersion=false` skips the check and the app builds, runs and
+passes DevFlow interaction on Xcode 26.5. Installing Xcode 26.6 (Xcodes.app is on the Mac) removes the need for the switch.
 
 ### F11. WSL distro age matters
 
