@@ -1,5 +1,7 @@
 # maui-platforms
 
+[![build](https://github.com/oughnic/maui-platforms/actions/workflows/build.yml/badge.svg)](https://github.com/oughnic/maui-platforms/actions/workflows/build.yml)
+
 A demonstrator for running the **default .NET MAUI app** on the three experimental desktop backends from
 [dotnet/maui-labs](https://github.com/dotnet/maui-labs): **Windows WPF**, **Linux GTK4** and **macOS AppKit**.
 It exists to understand the current state of the art, not to ship anything, so every rough edge is recorded in
@@ -13,10 +15,10 @@ packages taken from nuget.org.
 | Head | Target | Builds | Runs | DevFlow | Notes |
 | --- | --- | :-: | :-: | :-: | --- |
 | `MauiPlatforms.Wpf` | win-arm64 | ✅ | ✅ | ✅ | Default app renders correctly; DevFlow agent connects, screenshot/tree work, page content is not in the tree ([details](docs/status.md)) |
-| `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine; not yet run on x64 hardware |
+| `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine and built natively by CI on `windows-latest`; not yet run on x64 hardware |
 | `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | ✅ | ❌ | Built and run in WSL2 Ubuntu 24.04 (GTK 4.14); renders the page but no Shell navigation bar; the labs GTK DevFlow agent targets the old backend package ([details](docs/status.md)) |
-| `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ | Cross-compiled; not yet run on x64 hardware |
-| `MauiPlatforms.MacOS` | osx-arm64 | ⏳ | ⏳ | ⏳ | Needs Apple Silicon Mac + Xcode; only the GitHub Actions job exercises it so far |
+| `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ | Cross-compiled and built natively by CI on `ubuntu-24.04`; not yet run on x64 hardware |
+| `MauiPlatforms.MacOS` | osx-arm64 | ⏳ | ⏳ | ⏳ | Built by the `macos-26` CI job (first run failed on a missing workload, fixed); local run on an Apple Silicon Mac pending |
 | `MauiPlatforms` (default app, WinUI) | win-arm64 | ✅ | ➖ | agent added | Windows TFM only; android/ios/maccatalyst need the full `maui` workload |
 
 | WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) |
@@ -89,7 +91,15 @@ not `/mnt/c/...`, so `bin/`/`obj/` do not collide with the Windows builds.
 
 ### macOS (AppKit head)
 
-Apple Silicon Mac with Xcode 26, the pinned .NET 11 SDK and `dotnet workload install maui macos`, then:
+Apple Silicon Mac with Xcode 26 and the pinned .NET 11 SDK. A `UseMaui` project on `net11.0-macos` needs the `macos`
+workload plus the MAUI SDK packs, which the SDK resolves to the small `maui-tizen` workload (`maui` works too, at ~5× the
+download):
+
+```bash
+dotnet workload install macos maui-tizen
+```
+
+then:
 
 ```bash
 dotnet build src/MauiPlatforms.MacOS

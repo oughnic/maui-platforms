@@ -61,8 +61,10 @@ Restore fails out of the box. The head pins `$(MauiLabsVersion)` instead.
 ### F4. No macOS template package is published
 
 Docs and the labs README describe `dotnet new install Microsoft.Maui.Platforms.MacOS.Templates --prerelease`, but the
-package is not on nuget.org. `src/MauiPlatforms.MacOS` was hand-built from `platforms/MacOS/templates/maui-macos-app`
-and `samples/DevFlow.Sample.MacOS`.
+package is not on nuget.org. The template packaging was merged in
+[dotnet/maui-labs#466](https://github.com/dotnet/maui-labs/pull/466) on 2026-09-02, after the preview.12 build
+(2026-08-21), so it should appear with the next labs release; no issue filed. `src/MauiPlatforms.MacOS` was hand-built
+from `platforms/MacOS/templates/maui-macos-app` and `samples/DevFlow.Sample.MacOS`.
 
 ### F5. DevFlow's build targets break XAML code generation in a plain-TFM (GTK4) project
 
@@ -112,8 +114,11 @@ from NuGet). Everything else (JDK 21, Android SDK, emulator, licences) is green.
 
 ### F10. Skills / marketplace plumbing differs from the README
 
-- The `maui` CLI README documents `maui ai init`; the published CLI (preview.12) has no `ai` command. The DevFlow skills
-  come from `maui devflow init` (`.claude/skills/maui-devflow-*`) and the rest from the plugin marketplace.
+- The labs README documents `maui ai init`; the published CLI (preview.12) has no `ai` command. The command group was
+  added on `main` ([dotnet/maui-labs#98](https://github.com/dotnet/maui-labs/pull/98), docs in
+  [#513](https://github.com/dotnet/maui-labs/pull/513), merged 2026-09-22) and is simply not released yet. Until then
+  the DevFlow skills come from `maui devflow init` (`.claude/skills/maui-devflow-*`) and the rest from the plugin
+  marketplace.
 - The labs marketplace manifest lives at `.github/plugin/marketplace.json` (Copilot CLI convention). Claude Code expects
   `.claude-plugin/marketplace.json`, so `/plugin marketplace add dotnet/maui-labs` alone does not find it;
   `.claude/settings.json` registers it with an explicit `path`.
@@ -124,12 +129,28 @@ from NuGet). Everything else (JDK 21, Android SDK, emulator, licences) is green.
 
 The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4.14.5, above the backend's 4.12 minimum.
 
+## Issues filed against dotnet/maui-labs (2026-09-25)
+
+| Finding | Issue |
+| --- | --- |
+| F2 `maui-wpf` template does not restore/build | [dotnet/maui-labs#518](https://github.com/dotnet/maui-labs/issues/518) |
+| F3 `maui-linux-gtk4` template references non-existent `0.6.0-*` | [dotnet/maui-labs#519](https://github.com/dotnet/maui-labs/issues/519) |
+| F5 DevFlow targets break XAML source generation on plain TFMs | [dotnet/maui-labs#520](https://github.com/dotnet/maui-labs/issues/520) |
+| F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521) |
+| F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522) |
+
+No existing issues covered these (searched open and closed issues first). F4 and F10 are already fixed on `main` and
+await a release, so nothing was filed for them.
+
 ## Environment changes made on this machine
 
 - `maui` CLI updated to 0.1.0-preview.12; labs templates `maui-wpf` / `maui-linux-gtk4` and `Microsoft.Maui.Templates.net11` installed.
-- .NET 11 RC1 arm64 SDK installed **user-locally** in `%USERPROFILE%\.dotnet` with the `maui-windows` workload (removable; superseded by a machine-wide install).
-- WSL distro `Ubuntu-24.04` added (root only, no user account yet; the default distro is still `Ubuntu`).
+- .NET 11 RC1 arm64 SDK first installed **user-locally** in `%USERPROFILE%\.dotnet` with the `maui-windows` workload
+  (now redundant and removable), then machine-wide with the full `maui` workload via `eng/setup-windows.ps1`.
+- WSL distro `Ubuntu-24.04` added and made the default; user `nicholas` created (passwordless sudo, default user via
+  `/etc/wsl.conf`), `eng/setup-linux.sh` run for that user, repo cloned to `~/maui-platforms`. The GTK4 head builds there.
 - `.claude/skills/*` written by `maui devflow init`; `~/.maui/devflow/workspaces/*` state created by the CLI.
+- SSH key `%USERPROFILE%\.ssh\id_ed25519` generated for reaching the Mac (Stepney, 10.0.0.23).
 
 ## Re-testing
 

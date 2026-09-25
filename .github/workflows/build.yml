@@ -62,5 +62,7 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - run: dotnet workload install macos
+      # `macos` gives the net11.0-macos TFM; a UseMaui project on that TFM also needs the MAUI SDK packs, which the SDK
+      # resolves to the lightest workload carrying them, `maui-tizen` (NETSDK1147 otherwise). `maui` works too but is much bigger.
+      - run: dotnet workload install macos maui-tizen
       - run: dotnet build src/MauiPlatforms.MacOS -c Release
