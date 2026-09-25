@@ -34,7 +34,7 @@ packages taken from nuget.org.
 | `src/MauiPlatforms.Gtk4/` | GTK4 head: plain `net11.0` console project (no MAUI workload needed), `Microsoft.Maui.Platforms.Linux.Gtk4` (+ Essentials). DevFlow is opt-in, see below. |
 | `src/MauiPlatforms.MacOS/` | AppKit head: `net11.0-macos`, `Microsoft.Maui.Platforms.MacOS` (+ Essentials, DevFlow agent). Apple Silicon only. |
 | `Directory.Build.props` | Single place for the labs package version (`MauiLabsVersion`) and the MAUI version used where no workload is present. |
-| `eng/setup-windows.ps1`, `eng/setup-linux.sh` | Machine setup scripts (SDK, workloads, GTK4 packages, maui CLI, templates). |
+| `eng/setup-windows.ps1`, `eng/setup-linux.sh`, `eng/setup-macos.sh` | Machine setup scripts (SDK, workloads, GTK4 packages, maui CLI, templates). |
 | `.github/workflows/build.yml` | Build matrix: WPF on `windows-11-arm` + `windows-latest`, GTK4 on `ubuntu-24.04-arm` + `ubuntu-24.04`, AppKit on `macos-26`. |
 | `.claude/` | Claude Code project settings (maui-labs plugin marketplace, permissions) and the DevFlow skills installed by `maui devflow init`. |
 | `docs/status.md` | Findings, breakages and workarounds, with package versions. |
@@ -91,15 +91,16 @@ not `/mnt/c/...`, so `bin/`/`obj/` do not collide with the Windows builds.
 
 ### macOS (AppKit head)
 
-Apple Silicon Mac with Xcode 26 and the pinned .NET 11 SDK. A `UseMaui` project on `net11.0-macos` needs the `macos`
-workload plus the MAUI SDK packs, which the SDK resolves to the small `maui-tizen` workload (`maui` works too, at ~5× the
-download):
+Apple Silicon Mac with Xcode 26. `eng/setup-macos.sh` installs the pinned .NET 11 SDK into `~/.dotnet` (no sudo),
+the workloads and the `maui` CLI:
 
 ```bash
-dotnet workload install macos maui-tizen
+bash eng/setup-macos.sh            # macos + maui-tizen workloads
+bash eng/setup-macos.sh --mobile   # additionally the full maui workload for the default app's iOS/Mac Catalyst targets
 ```
 
-then:
+A `UseMaui` project on `net11.0-macos` needs the `macos` workload plus the MAUI SDK packs, which the SDK resolves to the
+small `maui-tizen` workload (`maui` works too, at several times the download). Then:
 
 ```bash
 dotnet build src/MauiPlatforms.MacOS
