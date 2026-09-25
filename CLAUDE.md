@@ -27,8 +27,9 @@ Goal: understand the current state of the art, so document breakage rather than 
 
 The heads **link** the shared app's `*.cs`, `*.xaml` and `Resources/**` with wildcards (see each head's csproj), the
 same pattern as `samples/DevFlow.Sample.*` in maui-labs. Each head has its own `MauiProgram.cs` whose only difference
-from the shared one is the hosting call (`UseMauiAppWPF`, `UseMauiAppLinuxGtk4`, `UseMauiAppMacOS`) and the
-backend-specific DevFlow agent package.
+from the shared one is the hosting call (`UseMauiAppWPF`, `UseMauiAppLinuxGtk4`, `UseMauiAppMacOS`), the backend's
+Essentials registration (`UseWPFEssentials`, `AddLinuxGtk4Essentials`, `AddMacOSEssentials` — without it the template's
+`SemanticScreenReader.Announce` call throws on the first click, F15) and the backend-specific DevFlow agent package.
 
 ## Building and running
 

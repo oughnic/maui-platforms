@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
+using Microsoft.Maui.Platforms.Linux.Gtk4.Essentials.Hosting;
 using Microsoft.Maui.Platforms.Linux.Gtk4.Hosting;
 #if DEBUG && MAUIDEVFLOW
 using Microsoft.Maui.DevFlow.Agent.Gtk;
@@ -19,6 +20,10 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiAppLinuxGtk4<App>()
+			// Linux implementations of Essentials. Without this the template's MainPage crashes on its first button
+			// click: SemanticScreenReader.Announce() hits MAUI's portable stub and throws
+			// NotImplementedInReferenceAssemblyException (docs/status.md F15). The labs template omits this call.
+			.AddLinuxGtk4Essentials()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

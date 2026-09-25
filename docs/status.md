@@ -180,6 +180,26 @@ for the one file it shares). For a head that links a shared project, add `Bundle
 `Fonts/OpenSans-*.ttf`, `Raw/AboutAssets.txt` and both image and font render. Worth a docs note or targets support in
 the backend; not filed as an issue yet.
 
+### F15. GTK4 head crashed on the first button click until the labs Essentials were registered
+
+Clicking "Click me" on the GTK4 head (WSL2 Ubuntu 24.04) logged:
+
+```
+UnhandledException - unhandled exception: Microsoft.Maui.ApplicationModel.NotImplementedInReferenceAssemblyException:
+This functionality is not implemented in the portable version of this assembly. ...
+   at Microsoft.Maui.Accessibility.SemanticScreenReaderImplementation.Announce(String text)
+   at MauiPlatforms.MainPage.OnCounterClicked(...) in src/MauiPlatforms/MainPage.xaml.cs:line 21
+```
+
+The default template's click handler calls `SemanticScreenReader.Announce`. Both the GTK4 and WPF heads resolve the
+plain `lib/net11.0` (portable) build of `Microsoft.Maui.Essentials`, whose implementations throw unless a backend
+supplies its own. The GTK4 head (like the labs `maui-linux-gtk4` template) referenced
+`Microsoft.Maui.Platforms.Linux.Gtk4.Essentials` but never called `AddLinuxGtk4Essentials()`; the WPF head calls
+`UseWPFEssentials()` and the macOS head `AddMacOSEssentials()`, and neither crashes (verified with real clicks: WPF
+and GTK4 both count clicks afterwards). With `.AddLinuxGtk4Essentials()` added to `src/MauiPlatforms.Gtk4/MauiProgram.cs`
+the GTK4 head counts clicks too; on Linux the screen reader implementation shells out to `spd-say`, so nothing is
+spoken unless speech-dispatcher is installed. Template omission noted on dotnet/maui-labs#519.
+
 ### F11. WSL distro age matters
 
 The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4.14.5, above the backend's 4.12 minimum.
