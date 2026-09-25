@@ -14,12 +14,14 @@ packages taken from nuget.org.
 | --- | --- | :-: | :-: | :-: | --- |
 | `MauiPlatforms.Wpf` | win-arm64 | ✅ | ✅ | ✅ | Default app renders correctly; DevFlow agent connects, screenshot/tree work, page content is not in the tree ([details](docs/status.md)) |
 | `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine; not yet run on x64 hardware |
-| `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | see [docs/status.md](docs/status.md) | opt-in | Compiled on Windows and built/run in WSL2 Ubuntu 24.04 |
-| `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | opt-in | Cross-compiled; not yet run on x64 hardware |
+| `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | ✅ | ❌ | Built and run in WSL2 Ubuntu 24.04 (GTK 4.14); renders the page but no Shell navigation bar; the labs GTK DevFlow agent targets the old backend package ([details](docs/status.md)) |
+| `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ | Cross-compiled; not yet run on x64 hardware |
 | `MauiPlatforms.MacOS` | osx-arm64 | ⏳ | ⏳ | ⏳ | Needs Apple Silicon Mac + Xcode; only the GitHub Actions job exercises it so far |
 | `MauiPlatforms` (default app, WinUI) | win-arm64 | ✅ | ➖ | agent added | Windows TFM only; android/ios/maccatalyst need the full `maui` workload |
 
-![Default MAUI app on the WPF backend, win-arm64](docs/screenshots/wpf-win-arm64.png)
+| WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) |
+| --- | --- |
+| ![Default MAUI app on the WPF backend](docs/screenshots/wpf-win-arm64.png) | ![Default MAUI app on the GTK4 backend](docs/screenshots/gtk4-linux-arm64.png) |
 
 ## What is here
 
@@ -63,8 +65,9 @@ pwsh -ExecutionPolicy Bypass -File eng\setup-windows.ps1 -WindowsOnly # just mau
 ```
 
 This installs the pinned .NET 11 SDK from the official installer, the MAUI workload(s), the `maui` CLI and the labs
-project templates. Visual Studio 2026 release channel does not yet know .NET 11 RC1; use the CLI, VS Code with C# Dev
-Kit, or Visual Studio 2026 Insiders.
+project templates. The .NET 11 RC1 announcement names Visual Studio 2026 Insiders (and VS Code with C# Dev Kit) as the
+supported IDEs; the Visual Studio 2026 release channel installed here (18.10) is not listed, so expect to use the CLI or
+Insiders for RC builds.
 
 ### Linux / WSL2 (GTK4 head)
 

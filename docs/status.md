@@ -11,14 +11,23 @@ Versions: .NET SDK 11.0.100-rc.1.26425.128, MAUI 11.0.0-rc.1.26451.6, maui-labs 
 | --- | --- | --- | --- | --- |
 | WPF | win-arm64 | ✅ 0 warnings | ✅ default app renders (Shell flyout, image, labels, button) | ✅ agent registers with broker, `ui tree` / `ui screenshot` work; see F7 |
 | WPF | win-x64 | ✅ cross-built on arm64 | not run (no x64 hardware here) | — |
-| GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | see "GTK4 run" below | opt-in, see F5/F6 |
+| GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ agent does not start with the new backend (F5/F6) |
 | GTK4 | linux-x64 | ✅ cross-compiled | not run | — |
 | macOS AppKit | osx-arm64 | not attempted (no Mac) | — | — |
 | Default app (WinUI) | win-arm64 | ✅ Windows TFM only (`-p:TargetFrameworks=net11.0-windows10.0.19041.0`) | not run | agent added |
 
 ### GTK4 run
 
-_Pending: filled in once the WSL2 Ubuntu 24.04 run completes (see the section at the end of this file)._
+Built inside WSL2 Ubuntu 24.04.5 (aarch64, GTK 4.14.5, .NET SDK 11.0.100-rc.1 installed by `eng/setup-linux.sh`) from
+a Linux-filesystem copy of the repo, then launched from `bin/Debug/net11.0/linux-arm64/`. The window appears on the
+Windows desktop through WSLg (title `MauiPlatforms (Ubuntu-24.04)`), see `docs/screenshots/gtk4-linux-arm64.png`.
+
+- The page renders: image, both labels and the button, Open Sans font loaded from the linked `MauiFont` items.
+- Differences from WPF/WinUI: **no Shell navigation bar or flyout button** is drawn for the single-item `AppShell`
+  (WPF draws the "Home" bar with ☰), and the two-line "Welcome to / .NET Multi-platform App UI" label is left-aligned
+  inside its centred block instead of centred. GTK's default light theme is used (WPF followed the Windows dark theme).
+- `libEGL warning … MESA: error: ZINK: failed to choose pdev` on startup is WSLg without GPU passthrough falling back
+  to software rendering; harmless.
 
 ## Findings
 
@@ -70,8 +79,15 @@ Workaround in `src/MauiPlatforms.Gtk4/MauiPlatforms.Gtk4.csproj`: `<DevFlowXamlS
 `Microsoft.Maui.DevFlow.Agent.Gtk` 0.1.0-preview.12 depends on `Platform.Maui.Linux.Gtk4 0.6.0` (the labs repo's
 `Microsoft.Maui.DevFlow.Agent.Gtk.csproj` still uses that package ID). Adding the agent to a
 `Microsoft.Maui.Platforms.Linux.Gtk4` app therefore ships two GTK backends (`Platform.Maui.Linux.Gtk4.dll` and
-`Microsoft.Maui.Platforms.Linux.Gtk4.dll`) plus two sets of MSBuild targets. It compiles, but the agent is bound to
-the old backend's types, so whether it can see the new backend's visual tree is untested.
+`Microsoft.Maui.Platforms.Linux.Gtk4.dll`) plus two sets of MSBuild targets.
+
+Tested on Ubuntu 24.04 (arm64) with `-p:MauiGtk4DevFlow=true`: the app builds and runs, but **the agent never starts**:
+no `[Microsoft.Maui.DevFlow]` lines in the app output (the WPF agent prints `HTTP server started on port …`), nothing
+listening (`ss -ltnp`), and `maui devflow --agent-port 9223 agent status` from Windows cannot connect. The agent
+assembly references the old `Platform.Maui.Linux.Gtk` namespace and exposes `StartDevFlowAgent()` as a hook on the old
+backend's application type, which `Microsoft.Maui.Platforms.Linux.Gtk4.Platform.GtkMauiApplication` does not derive
+from. So DevFlow for GTK is not usable with the new backend package until `Microsoft.Maui.DevFlow.Agent.Gtk` is rebuilt
+against `Microsoft.Maui.Platforms.Linux.Gtk4`.
 
 The GTK4 head therefore makes DevFlow opt-in: `dotnet build src/MauiPlatforms.Gtk4 -p:MauiGtk4DevFlow=true`.
 
