@@ -54,10 +54,17 @@ app bundle `bin/Debug/net11.0-macos/osx-arm64/MauiPlatforms.app` launches from t
 ### Smoke tests
 
 `eng/smoke-macos.sh` is a real test: it builds the AppKit head (Debug, so the DevFlow agent is compiled in), launches
-it, waits for the agent to register with the broker, checks `MainPage` is in the DevFlow tree, taps "Click me" by
-text, asserts the button now reads "Clicked 1 time", takes a screenshot and shuts everything down, exiting non-zero
-on any failure. It passes on Stepney and runs in CI as the `smoke-macos` job on `macos-26` (screenshot and logs are
-uploaded as the `smoke-macos` artifact).
+it, waits for the agent to register with the broker, waits for `MainPage` to appear in the DevFlow tree, taps
+"Click me" by text, asserts the button now reads "Clicked 1 time", takes a screenshot and shuts everything down,
+exiting non-zero on any failure. It passes on Stepney and in CI as the `smoke-macos` job on `macos-26` (about 90 s
+from launch to pass after the build; screenshot, tree and logs are uploaded as the `smoke-macos` artifact).
+
+Two things the CI runner taught that a Mac with a logged-in user hides:
+
+- Launching the bare executable never activated the app on the runner: the agent registered with the broker but its
+  HTTP server never started and `ui tree` returned `[]`. Launching through LaunchServices
+  (`open -n --stdout … --stderr … MauiPlatforms.app`) fixes it; the script also nudges with `osascript … activate`.
+- macOS's `/bin/bash` is 3.2, where `"${arr[@]}"` on an empty array under `set -u` aborts the script. Plain strings only.
 
 Only the AppKit head has a smoke test for now: DevFlow cannot tap the WPF head's page (F7, maui-labs#522) and the GTK4
 agent does not start (F6, maui-labs#521). Both heads were exercised by hand instead (real mouse click on WPF, xdotool
