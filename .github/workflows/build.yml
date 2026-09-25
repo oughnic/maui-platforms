@@ -66,3 +66,26 @@ jobs:
       # resolves to the lightest workload carrying them, `maui-tizen` (NETSDK1147 otherwise). `maui` works too but is much bigger.
       - run: dotnet workload install macos maui-tizen
       - run: dotnet build src/MauiPlatforms.MacOS -c Release
+
+  # Smoke tests: launch a head and drive it through DevFlow (tap the counter button, assert the text, screenshot).
+  # Only the AppKit head so far: DevFlow can tap it, whereas on WPF the page is not in the DevFlow tree (maui-labs#522)
+  # and on GTK4 the agent does not start (maui-labs#521). The screenshot and logs are uploaded as a job artifact.
+  smoke-macos:
+    name: "Smoke: macOS AppKit (DevFlow tap)"
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - run: dotnet workload install macos maui-tizen
+      - run: dotnet tool install -g Microsoft.Maui.Cli --prerelease
+      - run: bash eng/smoke-macos.sh
+        env:
+          SMOKE_OUT: ${{ runner.temp }}/smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-macos
+          path: ${{ runner.temp }}/smoke
+          if-no-files-found: ignore

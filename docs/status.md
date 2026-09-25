@@ -51,6 +51,18 @@ app bundle `bin/Debug/net11.0-macos/osx-arm64/MauiPlatforms.app` launches from t
 - Two labs-side prerequisites for a local build: `-p:ValidateXcodeVersion=false` on Xcode 26.5 (F13) and
   `DevFlowXamlSourceMapsEnabled=false` for Debug builds (F5). `eng/smoke-macos.sh` wraps the whole loop.
 
+### Smoke tests
+
+`eng/smoke-macos.sh` is a real test: it builds the AppKit head (Debug, so the DevFlow agent is compiled in), launches
+it, waits for the agent to register with the broker, checks `MainPage` is in the DevFlow tree, taps "Click me" by
+text, asserts the button now reads "Clicked 1 time", takes a screenshot and shuts everything down, exiting non-zero
+on any failure. It passes on Stepney and runs in CI as the `smoke-macos` job on `macos-26` (screenshot and logs are
+uploaded as the `smoke-macos` artifact).
+
+Only the AppKit head has a smoke test for now: DevFlow cannot tap the WPF head's page (F7, maui-labs#522) and the GTK4
+agent does not start (F6, maui-labs#521). Both heads were exercised by hand instead (real mouse click on WPF, xdotool
+on GTK4 under X11) and count clicks correctly.
+
 ## Findings
 
 Numbered so they can be referenced from the code and from issues filed against dotnet/maui-labs.

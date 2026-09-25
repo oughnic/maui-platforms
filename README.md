@@ -35,7 +35,8 @@ packages taken from nuget.org.
 | `src/MauiPlatforms.MacOS/` | AppKit head: `net11.0-macos`, `Microsoft.Maui.Platforms.MacOS` (+ Essentials, DevFlow agent). Apple Silicon only. |
 | `Directory.Build.props` | Single place for the labs package version (`MauiLabsVersion`) and the MAUI version used where no workload is present. |
 | `eng/setup-windows.ps1`, `eng/setup-linux.sh`, `eng/setup-macos.sh` | Machine setup scripts (SDK, workloads, GTK4 packages, maui CLI, templates). |
-| `.github/workflows/build.yml` | Build matrix: WPF on `windows-11-arm` + `windows-latest`, GTK4 on `ubuntu-24.04-arm` + `ubuntu-24.04`, AppKit on `macos-26`. |
+| `.github/workflows/build.yml` | Build matrix: WPF on `windows-11-arm` + `windows-latest`, GTK4 on `ubuntu-24.04-arm` + `ubuntu-24.04`, AppKit on `macos-26`; plus the `smoke-macos` job, which launches the AppKit head and taps it through DevFlow. |
+| `eng/smoke-macos.sh` | Smoke test for the AppKit head: build (Debug), launch, wait for the DevFlow agent, tap "Click me", assert "Clicked 1 time", screenshot. Used locally and by CI. |
 | `.claude/` | Claude Code project settings (maui-labs plugin marketplace, permissions) and the DevFlow skills installed by `maui devflow init`. |
 | `docs/status.md` | Findings, breakages and workarounds, with package versions. |
 
@@ -110,7 +111,13 @@ dotnet run --project src/MauiPlatforms.MacOS
 ```
 
 The .NET 11 RC1 macOS workload insists on Xcode 26.6; with Xcode 26.5 add `-p:ValidateXcodeVersion=false` to both
-commands (see finding F13). `eng/smoke-macos.sh` does the whole build, launch and DevFlow round-trip in one go.
+commands (see finding F13). The smoke test does the whole build, launch, DevFlow tap and assert in one go and fails
+non-zero if any step does not behave:
+
+```bash
+bash eng/smoke-macos.sh                        # Xcode 26.6
+VALIDATE_XCODE=false bash eng/smoke-macos.sh   # Xcode 26.5
+```
 
 ## Running the heads
 

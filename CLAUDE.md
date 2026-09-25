@@ -44,6 +44,10 @@ dotnet build src/MauiPlatforms.MacOS                   # on macOS only (Xcode 26
 `dotnet build MauiPlatforms.slnx` never fully succeeds on one OS — each head needs its own OS; build per project.
 The `-p:TargetFrameworks=...` override lets the default app build with only the `maui-windows` workload installed.
 
+Smoke test (AppKit only so far): `bash eng/smoke-macos.sh` (`VALIDATE_XCODE=false` on Xcode 26.5) builds, launches,
+taps the button through DevFlow and asserts the text; CI runs it in the `smoke-macos` job. WPF/GTK4 have no DevFlow
+smoke test yet because of maui-labs#522 / #521.
+
 ## Tools in play
 
 - **maui CLI** (`dotnet tool update -g Microsoft.Maui.Cli --prerelease`): `maui doctor`, `maui devflow ...`.
