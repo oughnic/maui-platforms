@@ -43,6 +43,10 @@ app bundle `bin/Debug/net11.0-macos/osx-arm64/MauiPlatforms.app` launches from t
   `ui tap --text "Click me"` succeeds twice, after which `ui query --type Button` reports `"Clicked 2 times"`.
 - The app log shows the backend's own diagnostics (`[WindowHandler.MapContent] page=AppShell, handler=ShellHandler`)
   and the agent start (`Agent started on port 10223`).
+- The first run had no `dotnet_bot.png` and used the system font: shared `MauiImage`/`MauiFont` items are not bundled
+  on this TFM (F14). With explicit `BundleResource` items the image and Open Sans render, as in the screenshot.
+- Two labs-side prerequisites for a local build: `-p:ValidateXcodeVersion=false` on Xcode 26.5 (F13) and
+  `DevFlowXamlSourceMapsEnabled=false` for Debug builds (F5). `eng/smoke-macos.sh` wraps the whole loop.
 
 ## Findings
 
@@ -159,6 +163,22 @@ workload, and the smallest concrete workload that carries them without extra pla
 (target `_ValidateXcodeVersion` in `Xamarin.Shared.Sdk.targets`). The GitHub `macos-26` runner has 26.6 so CI passes;
 Stepney has 26.5 and 26.2. Building with `-p:ValidateXcodeVersion=false` skips the check and the app builds, runs and
 passes DevFlow interaction on Xcode 26.5. Installing Xcode 26.6 (Xcodes.app is on the Mac) removes the need for the switch.
+
+### F14. On the AppKit head, `MauiImage` / `MauiFont` / `MauiAsset` never reach the app bundle
+
+The first macOS run rendered the labels and button but no `dotnet_bot.png`, and text fell back to the system font.
+`Contents/Resources` held only `AppIcon.icns`: the labs macOS targets (`Microsoft.Maui.Platforms.MacOS.targets`) only
+process `MauiIcon` (SVG → `.icns` via `sips`/`iconutil`), and MAUI's Resizetizer does not run for the `macos` TFM, so
+`MauiImage`/`MauiFont`/`MauiAsset` items are silently ignored. The backend looks for images in
+`<bundle>/Contents/Resources/Images` (`ImageHandler`) and pre-registers `*.ttf` from `.../Fonts` (`MacOSFontRegistrar`).
+
+The labs samples get away with it because their `Resources/` folder is physically inside the head project, where the
+macOS SDK's default `BundleResource` globbing picks it up (and `DevFlow.Sample.MacOS` adds an explicit `BundleResource`
+for the one file it shares). For a head that links a shared project, add `BundleResource` items with
+`Link="Resources\Images\…"` / `Link="Resources\Fonts\…"` (the SDK strips the leading `Resources\`), as
+`src/MauiPlatforms.MacOS/MauiPlatforms.MacOS.csproj` now does; after that the bundle contains `Images/dotnet_bot.png`,
+`Fonts/OpenSans-*.ttf`, `Raw/AboutAssets.txt` and both image and font render. Worth a docs note or targets support in
+the backend; not filed as an issue yet.
 
 ### F11. WSL distro age matters
 

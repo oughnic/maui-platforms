@@ -21,7 +21,7 @@ packages taken from nuget.org.
 | `MauiPlatforms.MacOS` | osx-arm64 | ✅ | ✅ | ✅ | Builds in CI (`macos-26`) and on an M-series Mac; renders the default app natively; DevFlow sees the whole page and taps the button ([details](docs/status.md)) |
 | `MauiPlatforms` (default app, WinUI) | win-arm64 | ✅ | ➖ | agent added | Windows TFM only; android/ios/maccatalyst need the full `maui` workload |
 
-| WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) | AppKit backend, osx-arm64 (after two DevFlow taps) |
+| WPF backend, win-arm64 | GTK4 backend, linux-arm64 (WSL2, WSLg) | AppKit backend, osx-arm64 (after a DevFlow tap) |
 | --- | --- | --- |
 | ![Default MAUI app on the WPF backend](docs/screenshots/wpf-win-arm64.png) | ![Default MAUI app on the GTK4 backend](docs/screenshots/gtk4-linux-arm64.png) | ![Default MAUI app on the AppKit backend](docs/screenshots/macos-osx-arm64.png) |
 
