@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Windows WPF head for the shared MAUI app in ../MauiPlatforms.
+    Uses the dotnet/maui-labs WPF backend instead of WinUI. Builds for both win-arm64 and win-x64.
+    Mirrors samples/DevFlow.Sample.WPF and platforms/Windows.WPF/samples in dotnet/maui-labs.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net11.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <UseMaui>true</UseMaui>
+    <RootNamespace>MauiPlatforms</RootNamespace>
+    <AssemblyName>MauiPlatforms.Wpf</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RuntimeIdentifiers>win-arm64;win-x64</RuntimeIdentifiers>
+
+    <ApplicationTitle>MauiPlatforms</ApplicationTitle>
+    <ApplicationId>com.companyname.mauiplatforms</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <!-- No App.xaml: the WPF Application object is created in Program.cs -->
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <!-- Stop the WPF SDK treating MAUI .xaml files as WPF pages, and MAUI from globbing this folder for XAML pairs -->
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <EnableDefaultMauiItems>false</EnableDefaultMauiItems>
+    <StartupObject>MauiPlatforms.Wpf.Program</StartupObject>
+    <!-- Suppress MA002: MAUI package references flow from the backend package -->
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.Windows.WPF" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.Windows.WPF.Essentials" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.WPF" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
+  </ItemGroup>
+
+  <!-- Shared app sources (everything except the platform folders and the standard MauiProgram) -->
+  <ItemGroup>
+    <Compile Include="..\MauiPlatforms\**\*.cs"
+             Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\MauiProgram.cs;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+             Link="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiXaml Include="..\MauiPlatforms\**\*.xaml"
+              Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+              Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Shared app resources (the WPF backend's build targets copy these into the output folder) -->
+  <ItemGroup>
+    <MauiIcon Include="..\MauiPlatforms\Resources\AppIcon\appicon.svg" ForegroundFile="..\MauiPlatforms\Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <MauiImage Include="..\MauiPlatforms\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
+    <MauiImage Update="..\MauiPlatforms\Resources\Images\dotnet_bot.png" BaseSize="222,185" />
+    <MauiFont Include="..\MauiPlatforms\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
+    <MauiAsset Include="..\MauiPlatforms\Resources\Raw\**" Link="Resources\Raw\%(RecursiveDir)%(Filename)%(Extension)" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Lets `maui devflow` identify this head when it discovers running agents -->
+  <ItemGroup>
+    <AssemblyMetadata Include="Microsoft.Maui.DevFlowProject" Value="MauiPlatforms.Wpf" />
+    <AssemblyMetadata Include="Microsoft.Maui.DevFlowTfm" Value="$(TargetFramework)" />
+  </ItemGroup>
+
+</Project>

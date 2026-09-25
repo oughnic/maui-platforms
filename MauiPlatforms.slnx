@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MauiPlatforms.Gtk4/MauiPlatforms.Gtk4.csproj" />
+    <Project Path="src/MauiPlatforms.MacOS/MauiPlatforms.MacOS.csproj" />
+    <Project Path="src/MauiPlatforms.Wpf/MauiPlatforms.Wpf.csproj" />
+    <Project Path="src/MauiPlatforms/MauiPlatforms.csproj" />
+  </Folder>
+</Solution>

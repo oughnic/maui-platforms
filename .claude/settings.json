@@ -1,0 +1,33 @@
+{
+  "extraKnownMarketplaces": {
+    "dotnet-maui-labs": {
+      "source": {
+        "source": "github",
+        "repo": "dotnet/maui-labs",
+        "path": ".github/plugin/marketplace.json"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "dotnet-maui@dotnet-maui-labs": true,
+    "dotnet-maui-tooling@dotnet-maui-labs": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet run:*)",
+      "Bash(dotnet test:*)",
+      "Bash(dotnet workload list:*)",
+      "Bash(dotnet --info:*)",
+      "Bash(dotnet --version:*)",
+      "Bash(maui doctor:*)",
+      "Bash(maui devflow:*)",
+      "Bash(maui device list:*)",
+      "Bash(maui version:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ]
+  }
+}

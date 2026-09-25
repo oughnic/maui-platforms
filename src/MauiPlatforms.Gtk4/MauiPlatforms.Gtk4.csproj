@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Linux GTK4 head for the shared MAUI app in ../MauiPlatforms.
+    Pattern: the labs GTK4 backend is a plain net11.0 console project (no MAUI workload needed);
+    the backend NuGet packages bring the MAUI build tasks with them. The shared app's C#, XAML and
+    resources are linked in with wildcards, mirroring samples/DevFlow.Sample.Linux in dotnet/maui-labs.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net11.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MauiPlatforms</RootNamespace>
+    <AssemblyName>MauiPlatforms.Gtk4</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
+
+    <ApplicationTitle>MauiPlatforms</ApplicationTitle>
+    <ApplicationId>com.companyname.mauiplatforms</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <!--
+      DevFlow on GTK4 is opt-in (-p:MauiGtk4DevFlow=true). Microsoft.Maui.DevFlow.Agent.Gtk 0.1.0-preview.12 still
+      depends on the superseded community package Platform.Maui.Linux.Gtk4 0.6.0, which drags a second, older GTK backend
+      (and its MSBuild targets) into the app next to Microsoft.Maui.Platforms.Linux.Gtk4. See docs/status.md.
+    -->
+    <MauiGtk4DevFlow Condition="'$(MauiGtk4DevFlow)' == ''">false</MauiGtk4DevFlow>
+    <DefineConstants Condition="'$(MauiGtk4DevFlow)' == 'true'">$(DefineConstants);MAUIDEVFLOW</DefineConstants>
+    <!--
+      Microsoft.Maui.DevFlow.Agent.Core.targets (preview.12) only hooks MAUI's XAML AdditionalFiles pipeline for
+      android/ios/maccatalyst/windows TFMs; on a plain net11.0 TFM it adds the XAML files as untyped AdditionalFiles,
+      which stops the MAUI XAML source generator emitting InitializeComponent. Turn its XAML source maps off here.
+    -->
+    <DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- MAUI 11 RC explicitly: the labs package only asks for >= 10.0.41, so pin the version we are evaluating. -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiControlsVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.Linux.Gtk4" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.Linux.Gtk4.Essentials" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.Gtk" Version="$(MauiLabsVersion)" Condition="'$(MauiGtk4DevFlow)' == 'true'" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
+  </ItemGroup>
+
+  <!-- Shared app sources (everything except the platform folders and the standard MauiProgram) -->
+  <ItemGroup>
+    <Compile Include="..\MauiPlatforms\**\*.cs"
+             Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\MauiProgram.cs;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+             Link="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiXaml Include="..\MauiPlatforms\**\*.xaml"
+              Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+              Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Shared app resources (the GTK4 backend's build targets copy these into the output folder) -->
+  <ItemGroup>
+    <MauiIcon Include="..\MauiPlatforms\Resources\AppIcon\appicon.svg" ForegroundFile="..\MauiPlatforms\Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <MauiImage Include="..\MauiPlatforms\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
+    <MauiImage Update="..\MauiPlatforms\Resources\Images\dotnet_bot.png" BaseSize="222,185" />
+    <MauiFont Include="..\MauiPlatforms\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
+    <MauiAsset Include="..\MauiPlatforms\Resources\Raw\**" Link="Resources\Raw\%(RecursiveDir)%(Filename)%(Extension)" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

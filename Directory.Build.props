@@ -1,0 +1,17 @@
+<Project>
+
+  <!--
+    Central place for the versions this demonstrator depends on.
+    - MauiLabsVersion: the dotnet/maui-labs experimental backends (WPF, GTK4, macOS AppKit) and DevFlow agent packages.
+      All labs packages share one version number; bump them together.
+    - MauiControlsVersion: used only by projects that cannot rely on the MAUI workload's $(MauiVersion)
+      (the GTK4 head is a plain net11.0 project with no workload).
+    The default app (src/MauiPlatforms) is left as `dotnet new maui -f net11.0` generated it (plus the DevFlow agent)
+    and uses $(MauiVersion) from the workload.
+  -->
+  <PropertyGroup>
+    <MauiLabsVersion>0.1.0-preview.12.26421.1</MauiLabsVersion>
+    <MauiControlsVersion>11.0.0-rc.1.26451.6</MauiControlsVersion>
+  </PropertyGroup>
+
+</Project>

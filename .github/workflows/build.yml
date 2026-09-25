@@ -1,0 +1,66 @@
+name: build
+
+# Builds every head on the OS/architecture it targets. Nothing here has been run yet: it is the intended matrix,
+# written so the first push to GitHub tells us which backend/arch combinations compile on .NET 11 RC.
+#   WPF   -> windows-11-arm (win-arm64) + windows-latest (win-x64)
+#   GTK4  -> ubuntu-24.04-arm (linux-arm64) + ubuntu-24.04 (linux-x64)
+#   AppKit-> macos-26 (osx-arm64, Apple Silicon only)
+# arm64 hosted runners are free for public repos; private repos are billed for them.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  wpf:
+    name: WPF (${{ matrix.rid }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-11-arm
+            rid: win-arm64
+          - os: windows-latest
+            rid: win-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - run: dotnet workload install maui-windows
+      - run: dotnet build src/MauiPlatforms.Wpf -c Release -r ${{ matrix.rid }}
+      - run: dotnet build src/MauiPlatforms -c Release -f net11.0-windows10.0.19041.0 -p:TargetFrameworks=net11.0-windows10.0.19041.0 -r ${{ matrix.rid }}
+        if: matrix.rid == 'win-arm64'
+
+  gtk4:
+    name: GTK4 (${{ matrix.rid }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04-arm
+            rid: linux-arm64
+          - os: ubuntu-24.04
+            rid: linux-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      # Compile only; GTK4 libraries are a run-time dependency (see eng/setup-linux.sh)
+      - run: dotnet build src/MauiPlatforms.Gtk4 -c Release -r ${{ matrix.rid }}
+
+  macos-appkit:
+    name: macOS AppKit (osx-arm64)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - run: dotnet workload install macos
+      - run: dotnet build src/MauiPlatforms.MacOS -c Release

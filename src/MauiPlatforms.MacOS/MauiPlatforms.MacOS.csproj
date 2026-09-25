@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    macOS AppKit head for the shared MAUI app in ../MauiPlatforms (NOT Mac Catalyst).
+    Apple Silicon only (osx-arm64). Builds only on macOS with Xcode and the `macos` workload installed;
+    mirrors platforms/MacOS/templates/maui-macos-app and samples/DevFlow.Sample.MacOS in dotnet/maui-labs.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net11.0-macos</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MauiPlatforms</RootNamespace>
+    <AssemblyName>MauiPlatforms.MacOS</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <SupportedOSPlatformVersion>14.0</SupportedOSPlatformVersion>
+    <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
+
+    <ApplicationTitle>MauiPlatforms</ApplicationTitle>
+    <ApplicationId>com.companyname.mauiplatforms</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.MacOS" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.MacOS.Essentials" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
+  </ItemGroup>
+
+  <!-- Shared app sources (everything except the platform folders and the standard MauiProgram) -->
+  <ItemGroup>
+    <Compile Include="..\MauiPlatforms\**\*.cs"
+             Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\MauiProgram.cs;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+             Link="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiXaml Include="..\MauiPlatforms\**\*.xaml"
+              Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
+              Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Shared app resources -->
+  <ItemGroup>
+    <MauiIcon Include="..\MauiPlatforms\Resources\AppIcon\appicon.svg" ForegroundFile="..\MauiPlatforms\Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+    <MauiImage Include="..\MauiPlatforms\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
+    <MauiImage Update="..\MauiPlatforms\Resources\Images\dotnet_bot.png" BaseSize="222,185" />
+    <MauiFont Include="..\MauiPlatforms\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
+    <MauiAsset Include="..\MauiPlatforms\Resources\Raw\**" Link="Resources\Raw\%(RecursiveDir)%(Filename)%(Extension)" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>
