@@ -114,7 +114,8 @@ This is the same pattern as `samples/DevFlow.Sample.*` in dotnet/maui-labs. It w
    left-aligns multi-line labels inside a centred block; macOS puts the flyout button and title in the window toolbar.
    Don't rely on the WinUI look.
 7. **Fonts on GTK4** currently ignore `FontSize`/`FontFamily`/`TextColor` set on labels and buttons (backend bug,
-   F16): expect theme-default text until it is fixed upstream.
+   F16, [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540)): expect theme-default text until it
+   is fixed upstream.
 
 ## 5. Central versions
 
@@ -511,7 +512,7 @@ written for bash 3.2 and exits non-zero on the first failed step.
 | WSL: GTK4 packages missing / too old | Ubuntu < 24.04 | Install `Ubuntu-24.04` |
 | `maui doctor`: "Windows SDK not found" with VS 2026 installed | Doctor's check, not the build | Ignore; WinUI builds get the SDK from NuGet |
 | WPF: `ui tap --text` finds nothing, `query --type Label` empty | WPF agent stops at `ShellContainerView` (#522) | Drive WPF with UI Automation or real clicks; screenshots still work |
-| GTK4: every Label/Button renders at the theme default size and font although `FontSize`/`FontFamily` are set | `GtkViewHandler.ApplyCss` keeps only the last property's CSS provider (CharacterSpacing's `letter-spacing: 0px` overwrites the font); sizes are also emitted in `pt` instead of `px` (status.md F16) | Upstream fix needed; a head-side `LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), MapFont)` restores size/family but loses TextColor |
+| GTK4: every Label/Button renders at the theme default size and font although `FontSize`/`FontFamily` are set | `GtkViewHandler.ApplyCss` keeps only the last property's CSS provider (CharacterSpacing's `letter-spacing: 0px` overwrites the font); sizes are also emitted in `pt` instead of `px` (status.md F16, [#540](https://github.com/dotnet/maui-labs/issues/540)) | Upstream fix needed; a head-side `LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), MapFont)` restores size/family but loses TextColor |
 
 ## 13. When versions move: what to re-check
 
@@ -519,7 +520,7 @@ written for bash 3.2 and exits non-zero on the first failed step.
   removing `DevFlowXamlSourceMapsEnabled=false`), #521 (GTK agent: once the release contains #535, turn
   `MauiGtk4DevFlow` on by default and add a GTK4 smoke test; the GTK agent still ships no build targets, so keep the
   `Microsoft.Maui.DevFlowProject`/`DevFlowTfm` `AssemblyMetadata` items in the head or `maui devflow list` shows
-  `"tfm": "unknown"`), #522 (WPF tree),
+  `"tfm": "unknown"`), #522 (WPF tree), #540 (GTK4 label fonts/colours: re-check the screenshots),
   and whether `Microsoft.Maui.Platforms.MacOS.Templates` is published (PR #466 merged 2026-09-02) and `maui ai init`
   shipped (PR #98/#513 merged 2026-09-22). Also whether the GTK4/WPF Essentials still need explicit registration.
 - **New .NET/MAUI drop** (bump `global.json` and `MauiControlsVersion`): re-check the macOS workload's Xcode
