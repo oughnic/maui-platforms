@@ -281,8 +281,15 @@ head (`LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), (h, 
 makes the headline render in Open Sans at 256 × 59, i.e. exactly the last-provider-wins behaviour plus the pt unit.
 Buttons and other CSS-styled controls are affected the same way (the button text stays at the default size).
 
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#541](https://github.com/dotnet/maui-labs/pull/541)
+(open).** Verified with its CI packages (`Microsoft.Maui.Platforms.Linux.Gtk4` + `.Essentials` 0.1.0-ci.747.1, with
+the #535 GTK agent) on WSL2 Ubuntu 24.04 arm64: the headline measures 192 × 44 (AppKit: 200 × 43) and renders in Open
+Sans, the button keeps its styled text (964 × 44), and DevFlow tap still works. The PR composes CSS per widget/selector/
+mapper in one reused provider (`GtkCssStyles`) with latest-update precedence, clears fragments on reset and disconnect,
+keeps the old `ApplyCss` signatures for compiled custom handlers, and emits invariant `px` sizes.
+
 Not worked around in this repo: the AppendToMapping trick restores size and family but then drops `TextColor`, so the
-honest fix is upstream: accumulate the CSS fragments per property (or use one CSS class per widget with a single
+honest fix is upstream (now #541): accumulate the CSS fragments per property (or use one CSS class per widget with a single
 display-level provider) and rebuild one provider, and map `Font.Size` to `px`. Side note: `maui devflow ui set-property
 … FontSize` reports success but does not override a Style-set value (it read back 32), so it cannot be used to probe this.
 
