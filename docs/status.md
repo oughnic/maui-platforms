@@ -299,6 +299,7 @@ The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4
 | F5 DevFlow targets break XAML source generation on plain TFMs | [dotnet/maui-labs#520](https://github.com/dotnet/maui-labs/issues/520) |
 | F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521) |
 | F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522) |
+| F16 GTK4 loses Label font/colour CSS (last provider wins), sizes in pt | [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540) |
 
 No existing issues covered these (searched open and closed issues first). F4 and F10 are already fixed on `main` and
 await a release, so nothing was filed for them.
