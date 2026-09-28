@@ -473,6 +473,27 @@ Register the agent in every head (`#if DEBUG`), start `maui devflow broker start
 
 `maui devflow mcp` exposes the same to AI agents. `maui devflow init` installs the DevFlow skills into `.claude/skills`.
 
+### Driving an app on a remote Linux box over ssh (no broker, no CLI on the target)
+
+The agent does not need the broker: without one it listens on its default port (9223, next free above it if busy) on
+`127.0.0.1`, and the CLI can be pointed at an agent directly with `-ah`/`-ap`. So a self-contained Debug publish on a
+device with no .NET SDK (a Raspberry Pi, a container, a VM) can be automated from the development machine:
+
+```bash
+# on the device: run the Debug publish (the agent is compiled in under #if DEBUG); note the port in the log
+GSK_RENDERER=cairo GDK_BACKEND=x11 ./MyApp.Gtk4 &   # "[Microsoft.Maui.DevFlow.Agent] HTTP server started on port 9223"
+
+# on the dev machine: forward the port, then use the CLI as usual with the agent host/port options
+ssh -N -L 9223:127.0.0.1:9223 user@device &
+maui devflow -ah 127.0.0.1 -ap 9223 ui tree --depth 4 --format compact
+maui devflow -ah 127.0.0.1 -ap 9223 ui tap --text "Click me"
+maui devflow -ah 127.0.0.1 -ap 9223 ui query --type Button --fields id,type,text,bounds
+```
+
+Verified on a Raspberry Pi 5 running the GTK4 head inside a Debian 13 podman container (the OS's own GTK was too old),
+see `docs/status.md` "Raspberry Pi 5 run": full tree, working taps and property reads, no `xdotool` needed. Publish
+with `-c Debug -r linux-arm64 --self-contained` and copy the folder with `tar`/`scp`; `-c Release` strips the agent.
+
 ### Smoke-test pattern (the one that runs in CI for AppKit)
 
 Build Debug → launch (via `open` on macOS) → poll `maui devflow list` for the platform (≤ 60 s) → poll `ui tree` for the
