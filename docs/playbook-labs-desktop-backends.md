@@ -113,6 +113,8 @@ This is the same pattern as `samples/DevFlow.Sample.*` in dotnet/maui-labs. It w
 6. **Shell**: works on all three, but GTK4 draws no navigation bar/flyout button for a single-item Shell and
    left-aligns multi-line labels inside a centred block; macOS puts the flyout button and title in the window toolbar.
    Don't rely on the WinUI look.
+7. **Fonts on GTK4** currently ignore `FontSize`/`FontFamily`/`TextColor` set on labels and buttons (backend bug,
+   F16): expect theme-default text until it is fixed upstream.
 
 ## 5. Central versions
 
@@ -509,6 +511,7 @@ written for bash 3.2 and exits non-zero on the first failed step.
 | WSL: GTK4 packages missing / too old | Ubuntu < 24.04 | Install `Ubuntu-24.04` |
 | `maui doctor`: "Windows SDK not found" with VS 2026 installed | Doctor's check, not the build | Ignore; WinUI builds get the SDK from NuGet |
 | WPF: `ui tap --text` finds nothing, `query --type Label` empty | WPF agent stops at `ShellContainerView` (#522) | Drive WPF with UI Automation or real clicks; screenshots still work |
+| GTK4: every Label/Button renders at the theme default size and font although `FontSize`/`FontFamily` are set | `GtkViewHandler.ApplyCss` keeps only the last property's CSS provider (CharacterSpacing's `letter-spacing: 0px` overwrites the font); sizes are also emitted in `pt` instead of `px` (status.md F16) | Upstream fix needed; a head-side `LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), MapFont)` restores size/family but loses TextColor |
 
 ## 13. When versions move: what to re-check
 

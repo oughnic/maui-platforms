@@ -26,6 +26,8 @@ Windows desktop through WSLg (title `MauiPlatforms (Ubuntu-24.04)`), see `docs/s
 - Differences from WPF/WinUI: **no Shell navigation bar or flyout button** is drawn for the single-item `AppShell`
   (WPF draws the "Home" bar with ☰), and the two-line "Welcome to / .NET Multi-platform App UI" label is left-aligned
   inside its centred block instead of centred. GTK's default light theme is used (WPF followed the Windows dark theme).
+  **All text renders at the theme's default size and font** (the Headline/SubHeadline styles and Open Sans are lost):
+  see F16 for the cause.
 - `libEGL warning … MESA: error: ZINK: failed to choose pdev` on startup is GTK's GL renderer failing to open a GPU
   through WSLg (`/dev/dxg` and the D3D12 libraries are present, but Mesa 25.2 cannot use them on this Arm64 box) and
   falling back to software rendering. Harmless, and `GSK_RENDERER=cairo ./MauiPlatforms.Gtk4` skips the GL attempt for
@@ -244,6 +246,37 @@ supplies its own. The GTK4 head (like the labs `maui-linux-gtk4` template) refer
 and GTK4 both count clicks afterwards). With `.AddLinuxGtk4Essentials()` added to `src/MauiPlatforms.Gtk4/MauiProgram.cs`
 the GTK4 head counts clicks too; on Linux the screen reader implementation shells out to `spd-say`, so nothing is
 spoken unless speech-dispatcher is installed. Template omission noted on dotnet/maui-labs#519.
+
+### F16. GTK4 renders every Label at the default size and font: the backend keeps only the last CSS property it applies
+
+Symptom: on GTK4 the "Hello, World!" headline (Style `FontSize=32`, `FontFamily=OpenSansRegular`) and the
+sub-headline (24) render at the theme default (~14 px, DejaVu Sans), while WPF and AppKit honour the styles.
+
+| | GTK4 (released + PR #535 packages) | AppKit | Notes |
+| --- | --- | --- | --- |
+| Headline label bounds | 95 × 18 | 200 × 43 | `maui devflow ui element`; the virtual view reports `FontSize = 32` on both |
+| Sub-headline bounds | 196 × 35 | 309 × 66 | |
+
+Cause (verified, `platforms/Linux.Gtk4/src/Linux.Gtk4/Handlers/GtkViewHandler.cs`):
+
+1. `ApplyCss(widget, css)` holds a single `_currentCssProvider` per handler; every call **removes the previous
+   provider** and adds a new `* { … }` one. Each property mapper (`MapFont`, `MapTextColor`, `MapCharacterSpacing`,
+   `MapShadow`, `MapBackground`, …) calls it independently, so only the last-mapped property's CSS survives. For a Label
+   the mapper order is Text → TextColor → Font → … → CharacterSpacing, and `MapCharacterSpacing` unconditionally emits
+   `letter-spacing: 0px;`, which discards the `font-size`/`font-family` (and the `color` set by TextColor).
+2. `BuildFontCss` emits `font-size: {Size}pt`, but MAUI font sizes are device-independent pixels: once the CSS does
+   apply, 32 renders as 32 pt ≈ 43 px (headline 256 × 59 on GTK4 vs 200 × 43 on AppKit). It should be `px`.
+
+Evidence: a rule in GTK's own user stylesheet (`~/.config/gtk-4.0/gtk.css`: `label { font-size: 32pt; }`) resizes the
+labels (headline 275 px wide), so CSS sizing works; and re-applying the font mapping after CharacterSpacing from the
+head (`LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), (h, v) => LabelHandler.MapFont(h, v))`)
+makes the headline render in Open Sans at 256 × 59, i.e. exactly the last-provider-wins behaviour plus the pt unit.
+Buttons and other CSS-styled controls are affected the same way (the button text stays at the default size).
+
+Not worked around in this repo: the AppendToMapping trick restores size and family but then drops `TextColor`, so the
+honest fix is upstream: accumulate the CSS fragments per property (or use one CSS class per widget with a single
+display-level provider) and rebuild one provider, and map `Font.Size` to `px`. Side note: `maui devflow ui set-property
+… FontSize` reports success but does not override a Style-set value (it read back 32), so it cannot be used to probe this.
 
 ### F11. WSL distro age matters
 
