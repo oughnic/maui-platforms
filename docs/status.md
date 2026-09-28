@@ -352,3 +352,20 @@ X11 session over xrdp (`:10`). The device also runs JMRI, so the OS was left unt
   the button reads "Clicked 1 time". Treat xdotool under xorgxrdp as needing the targeted form; not yet
   isolated which of the two actions counted.
 - Not tried: the released DevFlow GTK agent (still #521), packaging targets, Wayland on the seat0 session.
+
+**Redeployed 2026-09-28 with the maui-labs PR packages** (`~/gtk4-linux-arm64-pr` on the Pi, same container and display):
+backend + Essentials 0.1.0-ci.747.1 (#541), GTK DevFlow agent 0.1.0-ci.1240.1 (#535), Agent.Core/Abstractions/Logging
+0.1.0-ci.1242.1 (#537). Published as **Debug** (so the `#if DEBUG` agent is compiled in) with `-p:MauiGtk4DevFlow=true
+-p:DevFlowXamlSourceMapsEnabled=true` and the Agent.Core pin supplied through a throwaway `Directory.Build.targets`
+(`-p:DirectoryBuildTargetsPath=…`, because the head only references `Agent.Gtk` and its transitive Core would otherwise
+stay at ci.1240.1). 278 files, 100 MB, copied via `scp` from Windows (WSL has no key for the Pi).
+
+- #537: XAML source maps stayed on and the build still generated `InitializeComponent` (no `CS0103`).
+- #541: the headline renders in Open Sans at **192 × 44**, identical to the WSL measurement; the button keeps its styled
+  text. `docs/screenshots/gtk4-linux-arm64-pi5.png` (after the tap).
+- #535: the agent starts inside the container (`[Microsoft.Maui.DevFlow.Agent] HTTP server started on port 9223`, no broker on
+  the Pi so it takes the default port, bound to 127.0.0.1). Driven from the Surface through `ssh -L 9223:127.0.0.1:9223`
+  with `maui devflow -ah 127.0.0.1 -ap 9223 ui tree|tap|query`: full tree (Window → AppShell → … → MainPage), `ui tap --text
+  "Click me"` returns `Tapped`, `ui query --type Button` reads "Clicked 1 time". No xdotool needed any more, which sidesteps
+  the targeted-click gotcha above.
+- Unchanged noise: MESA-LOADER and the `dbus-launch` warning.
