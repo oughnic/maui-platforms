@@ -39,6 +39,7 @@ packages taken from nuget.org.
 | `eng/smoke-macos.sh` | Smoke test for the AppKit head: build (Debug), launch, wait for the DevFlow agent, tap "Click me", assert "Clicked 1 time", screenshot. Used locally and by CI. |
 | `.claude/` | Claude Code project settings (maui-labs plugin marketplace, permissions) and the DevFlow skills installed by `maui devflow init`. |
 | `docs/status.md` | Findings, breakages and workarounds, with package versions. |
+| `docs/playbook-labs-desktop-backends.md` | **Reusable playbook**: how to add the three backends to another existing MAUI app, with copy-paste head projects, per-OS prerequisites, DevFlow/CI recipes and a symptom → fix index. |
 
 The heads follow the pattern used by `samples/DevFlow.Sample.*` in maui-labs: each is a thin project that **links**
 the shared app's `*.cs`, `*.xaml` and `Resources/**` with wildcards and provides its own `MauiProgram.cs`, whose only

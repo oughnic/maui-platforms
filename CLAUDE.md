@@ -22,7 +22,7 @@ Goal: understand the current state of the art, so document breakage rather than 
 | `src/MauiPlatforms.Gtk4/` | GTK4 head: plain `net11.0` exe, `Microsoft.Maui.Platforms.Linux.Gtk4`. Runs on Linux (WSL2 Ubuntu 24.04 works). |
 | `src/MauiPlatforms.MacOS/` | AppKit head: `net11.0-macos`, `Microsoft.Maui.Platforms.MacOS`. Builds only on a Mac. |
 | `eng/` | `setup-windows.ps1`, `setup-linux.sh` machine setup scripts. |
-| `docs/` | Status matrix and findings. |
+| `docs/` | `status.md` (findings F1–F15) and `playbook-labs-desktop-backends.md` (how to add the backends to another app: read this first when extending a different project). |
 | `.claude/skills/` | DevFlow skills installed by `maui devflow init` (refresh with `maui devflow skills update`). |
 
 The heads **link** the shared app's `*.cs`, `*.xaml` and `Resources/**` with wildcards (see each head's csproj), the

@@ -15,6 +15,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RuntimeIdentifiers>win-arm64;win-x64</RuntimeIdentifiers>
+    <!-- net11.0-windows already defines WINDOWS, so shared code written for WinUI under `#if WINDOWS` would be compiled
+         into this head. Define WPF so such code can be guarded with `#if WINDOWS && !WPF` (see docs/playbook). -->
+    <DefineConstants>$(DefineConstants);WPF</DefineConstants>
 
     <ApplicationTitle>MauiPlatforms</ApplicationTitle>
     <ApplicationId>com.companyname.mauiplatforms</ApplicationId>
