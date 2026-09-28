@@ -119,6 +119,14 @@ unaffected because `net11.0-windows` takes the other branch.
 
 Workaround in `src/MauiPlatforms.Gtk4/MauiPlatforms.Gtk4.csproj`: `<DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>`.
 
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#537](https://github.com/dotnet/maui-labs/pull/537)
+(open).** Verified with its CI artifact (`Microsoft.Maui.DevFlow.*` 0.1.0-ci.1242.1): with the
+`DevFlowXamlSourceMapsEnabled=false` line removed, Debug builds of both the GTK4 head (Agent.Core ci.1242.1 alongside the
+#535 GTK agent/backend ci.1240.1, WSL2 Ubuntu 24.04 arm64) and the AppKit head (Stepney, Xcode 26.5) generate all five
+`*.xaml.sg.cs` partials, run, and pass the DevFlow tap ("Clicked 1 time"). The new target hooks `AfterTargets="_MauiInjectXamlCssAdditionalFiles"`
+and checks `UsingMicrosoftMauiControlsSdk` at execution time instead of a platform allow-list. Remove the workaround from
+both heads once #537 ships.
+
 **Also hits `net11.0-macos`** (the AppKit head): `macos` is missing from the same TFM list, so a Debug build on the Mac
 produced the identical six CS0103 errors. Release builds are unaffected because the source maps are Debug-only
 (`Microsoft.Maui.DevFlow.Agent.Core.props`), which is why the `-c Release` CI job passed. Same workaround applied to
