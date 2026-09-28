@@ -1,0 +1,1547 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v11.0/linux-arm64",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v11.0": {},
+    ".NETCoreApp,Version=v11.0/linux-arm64": {
+      "MauiPlatforms.Gtk4/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Debug": "11.0.0-rc.1.26425.128",
+          "Microsoft.Maui.Controls": "11.0.0-rc.1.26451.6",
+          "Microsoft.Maui.Platforms.Linux.Gtk4": "0.1.0-preview.12.26421.1",
+          "Microsoft.Maui.Platforms.Linux.Gtk4.Essentials": "0.1.0-preview.12.26421.1",
+          "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64": "11.0.0-rc.1.26425.128"
+        },
+        "runtime": {
+          "MauiPlatforms.Gtk4.dll": {}
+        }
+      },
+      "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64/11.0.0-rc.1.26425.128": {
+        "runtime": {
+          "Microsoft.CSharp.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Configuration.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Diagnostics.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.FileProviders.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Hosting.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Options.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Extensions.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.VisualBasic.Core.dll": {
+            "assemblyVersion": "16.0.0.0",
+            "fileVersion": "16.0.26.42628"
+          },
+          "Microsoft.VisualBasic.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Win32.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "Microsoft.Win32.Registry.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.AppContext.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Buffers.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Collections.Concurrent.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Collections.Immutable.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Collections.NonGeneric.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Collections.Specialized.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Collections.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.Annotations.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.DataAnnotations.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.EventBasedAsync.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.TypeConverter.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ComponentModel.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Configuration.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Console.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Data.Common.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Data.DataSetExtensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Data.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.Contracts.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.Debug.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.DiagnosticSource.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.FileVersionInfo.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.Process.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.StackTrace.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.TextWriterTraceListener.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.Tools.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.TraceSource.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Diagnostics.Tracing.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Drawing.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Drawing.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Dynamic.Runtime.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Formats.Asn1.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Formats.Tar.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Globalization.Calendars.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Globalization.Extensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Globalization.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Compression.Brotli.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Compression.FileSystem.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Compression.ZipFile.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Compression.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.FileSystem.AccessControl.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.FileSystem.DriveInfo.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.FileSystem.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.FileSystem.Watcher.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.FileSystem.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.IsolatedStorage.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.MemoryMappedFiles.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Pipelines.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Pipes.AccessControl.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.Pipes.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.UnmanagedMemoryStream.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.IO.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Linq.AsyncEnumerable.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Linq.Expressions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Linq.Parallel.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Linq.Queryable.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Linq.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Memory.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Http.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Http.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.HttpListener.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Mail.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.NameResolution.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.NetworkInformation.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Ping.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Quic.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Requests.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Security.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.ServerSentEvents.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.ServicePoint.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.Sockets.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.WebClient.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.WebHeaderCollection.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.WebProxy.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.WebSockets.Client.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.WebSockets.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Net.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Numerics.Vectors.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Numerics.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ObjectModel.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Private.CoreLib.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Private.DataContractSerialization.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Private.Uri.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Private.Xml.Linq.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Private.Xml.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.DispatchProxy.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Emit.ILGeneration.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Emit.Lightweight.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Emit.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Extensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Metadata.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.TypeExtensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Reflection.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Resources.Reader.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Resources.ResourceManager.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Resources.Writer.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.CompilerServices.Unsafe.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.CompilerServices.VisualC.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Extensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Handles.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.InteropServices.JavaScript.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.InteropServices.RuntimeInformation.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.InteropServices.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Intrinsics.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Loader.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Numerics.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Serialization.Formatters.dll": {
+            "assemblyVersion": "8.1.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Serialization.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Serialization.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Serialization.Xml.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.Serialization.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Runtime.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.AccessControl.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Claims.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.Algorithms.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.Cng.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.Csp.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.Encoding.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.OpenSsl.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.Primitives.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.X509Certificates.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Cryptography.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Principal.Windows.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.Principal.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.SecureString.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Security.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ServiceModel.Web.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ServiceProcess.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.Encoding.CodePages.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.Encoding.Extensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.Encoding.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.Encodings.Web.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Text.RegularExpressions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.AccessControl.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Channels.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Overlapped.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Tasks.Dataflow.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Tasks.Extensions.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Tasks.Parallel.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Tasks.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Thread.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.ThreadPool.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.Timer.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Threading.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Transactions.Local.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Transactions.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.ValueTuple.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Web.HttpUtility.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Web.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Windows.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.Linq.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.ReaderWriter.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.Serialization.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.XDocument.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.XPath.XDocument.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.XPath.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.XmlDocument.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.XmlSerializer.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.Xml.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "System.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "WindowsBase.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "mscorlib.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "11.0.26.42628"
+          },
+          "netstandard.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "11.0.26.42628"
+          }
+        },
+        "native": {
+          "createdump": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libSystem.Globalization.Native.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libSystem.IO.Compression.Native.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libSystem.Native.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libSystem.Net.Security.Native.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libSystem.Security.Cryptography.Native.OpenSsl.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libclrgc.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libclrgcexp.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libclrjit.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libcoreclr.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libcoreclrtraceptprovider.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libhostfxr.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libhostpolicy.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libmscordaccore.so": {
+            "fileVersion": "0.0.0.0"
+          },
+          "libmscordbi.so": {
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "GirCore.Cairo-1.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/cairo-1.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "cairo-1.0.dll"
+          }
+        }
+      },
+      "GirCore.FreeType2-2.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GLib-2.0": "0.7.0",
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/freetype2-2.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "freetype2-2.0.dll"
+          }
+        }
+      },
+      "GirCore.Gdk-4.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Cairo-1.0": "0.7.0",
+          "GirCore.GdkPixbuf-2.0": "0.7.0",
+          "GirCore.Gio-2.0": "0.7.0",
+          "GirCore.Pango-1.0": "0.7.0",
+          "GirCore.PangoCairo-1.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Gdk-4.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Gdk-4.0.dll"
+          }
+        }
+      },
+      "GirCore.GdkPixbuf-2.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Gio-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/GdkPixbuf-2.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "GdkPixbuf-2.0.dll"
+          }
+        }
+      },
+      "GirCore.Gio-2.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Gio-2.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Gio-2.0.dll"
+          }
+        }
+      },
+      "GirCore.GLib-2.0/0.7.0": {
+        "runtime": {
+          "lib/net10.0/GLib-2.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "GLib-2.0.dll"
+          }
+        }
+      },
+      "GirCore.GObject-2.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GLib-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/GObject-2.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "GObject-2.0.dll"
+          }
+        }
+      },
+      "GirCore.Graphene-1.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Graphene-1.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Graphene-1.0.dll"
+          }
+        }
+      },
+      "GirCore.Gsk-4.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Gdk-4.0": "0.7.0",
+          "GirCore.Graphene-1.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Gsk-4.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Gsk-4.0.dll"
+          }
+        }
+      },
+      "GirCore.Gtk-4.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Gdk-4.0": "0.7.0",
+          "GirCore.Gsk-4.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Gtk-4.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Gtk-4.0.dll"
+          }
+        }
+      },
+      "GirCore.HarfBuzz-0.0/0.7.0": {
+        "dependencies": {
+          "GirCore.FreeType2-2.0": "0.7.0",
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/HarfBuzz-0.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "HarfBuzz-0.0.dll"
+          }
+        }
+      },
+      "GirCore.JavaScriptCore-6.0/0.7.0": {
+        "dependencies": {
+          "GirCore.GObject-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/JavaScriptCore-6.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "JavaScriptCore-6.0.dll"
+          }
+        }
+      },
+      "GirCore.Pango-1.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Cairo-1.0": "0.7.0",
+          "GirCore.GObject-2.0": "0.7.0",
+          "GirCore.Gio-2.0": "0.7.0",
+          "GirCore.HarfBuzz-0.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Pango-1.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Pango-1.0.dll"
+          }
+        }
+      },
+      "GirCore.PangoCairo-1.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Cairo-1.0": "0.7.0",
+          "GirCore.GObject-2.0": "0.7.0",
+          "GirCore.Pango-1.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/PangoCairo-1.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "PangoCairo-1.0.dll"
+          }
+        }
+      },
+      "GirCore.Soup-3.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Gio-2.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/Soup-3.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "Soup-3.0.dll"
+          }
+        }
+      },
+      "GirCore.WebKit-6.0/0.7.0": {
+        "dependencies": {
+          "GirCore.Gtk-4.0": "0.7.0",
+          "GirCore.JavaScriptCore-6.0": "0.7.0",
+          "GirCore.Soup-3.0": "0.7.0"
+        },
+        "runtime": {
+          "lib/net10.0/WebKit-6.0.dll": {
+            "assemblyVersion": "0.7.0.0",
+            "fileVersion": "0.7.0.0",
+            "localPath": "WebKit-6.0.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.Configuration/11.0.0-preview.7.26381.103": {
+        "runtime": {
+          "lib/net11.0/Microsoft.Extensions.Configuration.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.38203",
+            "localPath": "Microsoft.Extensions.Configuration.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.DependencyInjection/11.0.0-rc.1.26425.128": {
+        "runtime": {
+          "lib/net11.0/Microsoft.Extensions.DependencyInjection.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628",
+            "localPath": "Microsoft.Extensions.DependencyInjection.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging/11.0.0-rc.1.26425.128": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "11.0.0-rc.1.26425.128"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Extensions.Logging.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628",
+            "localPath": "Microsoft.Extensions.Logging.dll"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Debug/11.0.0-rc.1.26425.128": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "11.0.0-rc.1.26425.128"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Extensions.Logging.Debug.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.42628",
+            "localPath": "Microsoft.Extensions.Logging.Debug.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Controls/11.0.0-rc.1.26451.6": {
+        "dependencies": {
+          "Microsoft.Maui.Controls.Core": "11.0.0-rc.1.26451.6",
+          "Microsoft.Maui.Controls.Xaml": "11.0.0-rc.1.26451.6"
+        }
+      },
+      "Microsoft.Maui.Controls.Core/11.0.0-rc.1.26451.6": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "11.0.0-preview.7.26381.103",
+          "Microsoft.Extensions.DependencyInjection": "11.0.0-rc.1.26425.128",
+          "Microsoft.Extensions.Logging": "11.0.0-rc.1.26425.128",
+          "Microsoft.Maui.Core": "11.0.0-rc.1.26451.6"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Maui.Controls.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.45106",
+            "localPath": "Microsoft.Maui.Controls.dll"
+          }
+        },
+        "resources": {
+          "lib/net11.0/ar/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ar",
+            "localPath": "ar/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ca/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ca",
+            "localPath": "ca/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/cs/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "cs",
+            "localPath": "cs/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/da/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "da",
+            "localPath": "da/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/de/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "de",
+            "localPath": "de/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/el/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "el",
+            "localPath": "el/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/es/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "es",
+            "localPath": "es/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/fi/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "fi",
+            "localPath": "fi/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/fr/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "fr",
+            "localPath": "fr/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/he/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "he",
+            "localPath": "he/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/hi/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "hi",
+            "localPath": "hi/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/hr/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "hr",
+            "localPath": "hr/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/hu/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "hu",
+            "localPath": "hu/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/id/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "id",
+            "localPath": "id/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/it/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "it",
+            "localPath": "it/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ja/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ja",
+            "localPath": "ja/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ko/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ko",
+            "localPath": "ko/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ms/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ms",
+            "localPath": "ms/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/nb/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "nb",
+            "localPath": "nb/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/nl/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "nl",
+            "localPath": "nl/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/pl/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "pl",
+            "localPath": "pl/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/pt-BR/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "pt-BR",
+            "localPath": "pt-BR/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/pt/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "pt",
+            "localPath": "pt/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ro/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ro",
+            "localPath": "ro/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/ru/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "ru",
+            "localPath": "ru/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/sk/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "sk",
+            "localPath": "sk/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/sv/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "sv",
+            "localPath": "sv/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/th/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "th",
+            "localPath": "th/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/tr/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "tr",
+            "localPath": "tr/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/uk/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "uk",
+            "localPath": "uk/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/vi/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "vi",
+            "localPath": "vi/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/zh-HK/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "zh-HK",
+            "localPath": "zh-HK/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/zh-Hans/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "zh-Hans",
+            "localPath": "zh-Hans/Microsoft.Maui.Controls.resources.dll"
+          },
+          "lib/net11.0/zh-Hant/Microsoft.Maui.Controls.resources.dll": {
+            "locale": "zh-Hant",
+            "localPath": "zh-Hant/Microsoft.Maui.Controls.resources.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Controls.Xaml/11.0.0-rc.1.26451.6": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "11.0.0-preview.7.26381.103",
+          "Microsoft.Maui.Controls.Core": "11.0.0-rc.1.26451.6",
+          "Microsoft.Maui.Core": "11.0.0-rc.1.26451.6"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Maui.Controls.Xaml.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.45106",
+            "localPath": "Microsoft.Maui.Controls.Xaml.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Core/11.0.0-rc.1.26451.6": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "11.0.0-preview.7.26381.103",
+          "Microsoft.Extensions.DependencyInjection": "11.0.0-rc.1.26425.128",
+          "Microsoft.Extensions.Logging": "11.0.0-rc.1.26425.128",
+          "Microsoft.Maui.Essentials": "11.0.0-rc.1.26451.6",
+          "Microsoft.Maui.Graphics": "11.0.0-rc.1.26451.6"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Maui.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.45106",
+            "localPath": "Microsoft.Maui.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Essentials/11.0.0-rc.1.26451.6": {
+        "dependencies": {
+          "Microsoft.Maui.Graphics": "11.0.0-rc.1.26451.6"
+        },
+        "runtime": {
+          "lib/net11.0/Microsoft.Maui.Essentials.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.45106",
+            "localPath": "Microsoft.Maui.Essentials.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Graphics/11.0.0-rc.1.26451.6": {
+        "runtime": {
+          "lib/net11.0/Microsoft.Maui.Graphics.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.26.45106",
+            "localPath": "Microsoft.Maui.Graphics.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Platforms.Linux.Gtk4/0.1.0-preview.12.26421.1": {
+        "dependencies": {
+          "GirCore.GdkPixbuf-2.0": "0.7.0",
+          "GirCore.Gtk-4.0": "0.7.0",
+          "GirCore.WebKit-6.0": "0.7.0",
+          "Microsoft.Maui.Controls": "11.0.0-rc.1.26451.6"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Maui.Platforms.Linux.Gtk4.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.100.26.42101",
+            "localPath": "Microsoft.Maui.Platforms.Linux.Gtk4.dll"
+          }
+        }
+      },
+      "Microsoft.Maui.Platforms.Linux.Gtk4.Essentials/0.1.0-preview.12.26421.1": {
+        "dependencies": {
+          "GirCore.Gtk-4.0": "0.7.0",
+          "Microsoft.Maui.Essentials": "11.0.0-rc.1.26451.6",
+          "Microsoft.Maui.Platforms.Linux.Gtk4": "0.1.0-preview.12.26421.1",
+          "Tmds.DBus.Protocol": "0.92.0"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Maui.Platforms.Linux.Gtk4.Essentials.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.100.26.42101",
+            "localPath": "Microsoft.Maui.Platforms.Linux.Gtk4.Essentials.dll"
+          }
+        }
+      },
+      "Tmds.DBus.Protocol/0.92.0": {
+        "runtime": {
+          "lib/net9.0/Tmds.DBus.Protocol.dll": {
+            "assemblyVersion": "0.92.0.0",
+            "fileVersion": "0.92.0.0",
+            "localPath": "Tmds.DBus.Protocol.dll"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MauiPlatforms.Gtk4/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "runtimepack.Microsoft.NETCore.App.Runtime.linux-arm64/11.0.0-rc.1.26425.128": {
+      "type": "runtimepack",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GirCore.Cairo-1.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pAfml9ObPSnxRM6GQEVlGEQWxd3Rw7/k0Y0U+Q5+ja8Pa8m9LdDRDhlNrDyy783NrxyoI1amTcp4aTSfLYkfiA==",
+      "path": "gircore.cairo-1.0/0.7.0",
+      "hashPath": "gircore.cairo-1.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.FreeType2-2.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SLDUDCw2XFxBph5E+xLRkzpCqz+A5JygaNZ+U4jotI2tBsBNQG9qRv85EC5lPtPJa7+XVf1BbWTyV0O/R8tojA==",
+      "path": "gircore.freetype2-2.0/0.7.0",
+      "hashPath": "gircore.freetype2-2.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Gdk-4.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zjBRx2ZY8DDe7Ymr/ID2Xwk05TT0aWslIRbR5tmjSfSfT9NKQ1COw2l0idI1cl0mc8JtK3zWeWg/9RIZqJH6zA==",
+      "path": "gircore.gdk-4.0/0.7.0",
+      "hashPath": "gircore.gdk-4.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.GdkPixbuf-2.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1OHjfGeTvYG6iF7dcdFlC++JurO47VO0Fmw9CkUNk4O6BXr2qHogZKWpnII4AkCiZJlA5sjoeTrxxS1QfIAvVw==",
+      "path": "gircore.gdkpixbuf-2.0/0.7.0",
+      "hashPath": "gircore.gdkpixbuf-2.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Gio-2.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-E0Ubm/FjAgBBW5o4m33TIsnFe9McoOne8bHo6c8mi8ajuDMpAPMhboBgIdQWDvPEMcSkLrdg/NR3kRTUeS/2KQ==",
+      "path": "gircore.gio-2.0/0.7.0",
+      "hashPath": "gircore.gio-2.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.GLib-2.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RaFYLZTRpKYRJrvMa1/ctrQQfAX5rTpZzFRudCp9AVQOdOYQl3LYqVAqc4otFTD6bIXpoV0msm7azGCfyF7XbQ==",
+      "path": "gircore.glib-2.0/0.7.0",
+      "hashPath": "gircore.glib-2.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.GObject-2.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-95ehT1EbreYDFAQJposjK+0olBcWjLSs3hie3j8lL3MtCgrAMFzQuJU8Qdz0jAUl9WX2a0pb5mv1ZkUCFAbbKA==",
+      "path": "gircore.gobject-2.0/0.7.0",
+      "hashPath": "gircore.gobject-2.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Graphene-1.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MI9tWmhQYQr/8mKnETDfNm7owLLl59fB8SZxGb6r+twED8Ht+dVPYRayfnUHZXA2RkI9IcaFBgLoSXMYRGU4CA==",
+      "path": "gircore.graphene-1.0/0.7.0",
+      "hashPath": "gircore.graphene-1.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Gsk-4.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rcwMMx4UIETIzhepudeOmz6Iy9nNofwcs+cpkaO3FJ169aeuY/4wAjR85ErvIHpbntFQ1MQ8Jqk0ILH2/qQdlQ==",
+      "path": "gircore.gsk-4.0/0.7.0",
+      "hashPath": "gircore.gsk-4.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Gtk-4.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CUNtwNQNUEvug70ird+LFaH4bhuKMmIygkeAbk6RdP/m1EOycRt2+tX4s/2ImnwRNl5rnWt+PSEeujYUnhka2Q==",
+      "path": "gircore.gtk-4.0/0.7.0",
+      "hashPath": "gircore.gtk-4.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.HarfBuzz-0.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Agiqbvs32egK/XyB3waa54W3qPNgyEqE5laEdjWY8GfzFp5Dxw/pYQJQoNVaNPChQCtMdTKTGP9EdbUiw4FAMQ==",
+      "path": "gircore.harfbuzz-0.0/0.7.0",
+      "hashPath": "gircore.harfbuzz-0.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.JavaScriptCore-6.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-69XfcYZkjeExq/e+/y75VoJdNxsX1CVcI7Lxyk6gtDQRv4WHbmkWcKJYt+UWErEqZ5KkRNPwVy9/WOstrpRpGw==",
+      "path": "gircore.javascriptcore-6.0/0.7.0",
+      "hashPath": "gircore.javascriptcore-6.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Pango-1.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-f4kMumRl0rdPaiffNdXXM/vt0FLaHbNG44MYtFK9c+danngo7naIiwizkWJQMUGPFTNglrP/nSgN8mobOiCt3w==",
+      "path": "gircore.pango-1.0/0.7.0",
+      "hashPath": "gircore.pango-1.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.PangoCairo-1.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cgSLsyORj0TxBZVchzfdu8mp7kZXoUwAfkbKMoKSDhgo/HVmaOHulXZZU5iWU6PZ9Bvzk+ks3lSyjDHCuK+IrQ==",
+      "path": "gircore.pangocairo-1.0/0.7.0",
+      "hashPath": "gircore.pangocairo-1.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.Soup-3.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qRdDl1LZKXE7ctqkqeS/EBs3My/jpxkFTO1VsKKx/MOAicJAMF4kVV96iU9hWR5w6IYG0zx0VSKlda0X3ucgeA==",
+      "path": "gircore.soup-3.0/0.7.0",
+      "hashPath": "gircore.soup-3.0.0.7.0.nupkg.sha512"
+    },
+    "GirCore.WebKit-6.0/0.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ff8SY4TFgaAJ1/3LjxtZhDcdzraqJOCFXIM0apeJjHQ9lqyDJtM2d/7qc9o7kHkzxPGRoRUHYZwGTSpC5aMSrQ==",
+      "path": "gircore.webkit-6.0/0.7.0",
+      "hashPath": "gircore.webkit-6.0.0.7.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration/11.0.0-preview.7.26381.103": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6YIdcM583agiVU/fJ/rANk7p55VDYnPfP46fB48VDJn9LrQ3J7Bib5kAQtCCsrW1IJv9fh7TkoiYYdcVps9F3A==",
+      "path": "microsoft.extensions.configuration/11.0.0-preview.7.26381.103",
+      "hashPath": "microsoft.extensions.configuration.11.0.0-preview.7.26381.103.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection/11.0.0-rc.1.26425.128": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r9VvtUpwM0MZ21DaTQWDqmsm6ABmuuXA/4aqa9LJVZET0HGlIG0Z5eN2esarFAQW2xtgGFyIYcnWs5uxUUizgg==",
+      "path": "microsoft.extensions.dependencyinjection/11.0.0-rc.1.26425.128",
+      "hashPath": "microsoft.extensions.dependencyinjection.11.0.0-rc.1.26425.128.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging/11.0.0-rc.1.26425.128": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SxnI3xH/jZ11sRY5l1DqaqH4z7tyEqAa0ehQ6xsBGenst1mFy91iGWGZfUA0MnyPxQCdjmAlvPmuCvLsrv/ufw==",
+      "path": "microsoft.extensions.logging/11.0.0-rc.1.26425.128",
+      "hashPath": "microsoft.extensions.logging.11.0.0-rc.1.26425.128.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Debug/11.0.0-rc.1.26425.128": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-E8OLQlV4ZaNzRU1bmrWAE+RZNXTnx9Guu+b4fwdrjDA944rk2aYADig/XKssjHZawbKhp2fWUoPDVffdrs8vxw==",
+      "path": "microsoft.extensions.logging.debug/11.0.0-rc.1.26425.128",
+      "hashPath": "microsoft.extensions.logging.debug.11.0.0-rc.1.26425.128.nupkg.sha512"
+    },
+    "Microsoft.Maui.Controls/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XVWJV6xd4GOzskMtxHA9Gf8NlxSQ+u7VlDWlaMzEfxLIQxNkaKNKlQvSbXdIp+WED6Z80C3eoA2vegp+Qf7a+Q==",
+      "path": "microsoft.maui.controls/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.controls.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Controls.Core/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cdOtoK5jzD1Bwn1Y+Hifix7FP5PFxNIWXWXGFXRVUWT6WjgsUItbDH9mR5/g5YJPUZ05vpXowuum6tPyo6KmIQ==",
+      "path": "microsoft.maui.controls.core/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.controls.core.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Controls.Xaml/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HF/Csh924beGIgW+C9dC/U8d+xX4zp1m/B36wmm60brHOUTXc5gYivUVl+qZgnoE2rFhGH9cJSxmsJapSmteHg==",
+      "path": "microsoft.maui.controls.xaml/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.controls.xaml.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Core/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HqMZZpgTvEMyMsIKhM7IJ20H3r37/BMDaLN5tDBNcCMjdPZbtD/YsZs94JRJFB67NdMkM4m6kkAAbk4uyNLYfg==",
+      "path": "microsoft.maui.core/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.core.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Essentials/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eVO2VVnYxPtkyBTauZFn6/uLqht9ETVrmgfKzEnEq0ojmjNLmi60S4cyoXL1Hv/r3KkRrg74uNbYb14hFPEZpw==",
+      "path": "microsoft.maui.essentials/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.essentials.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Graphics/11.0.0-rc.1.26451.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ykn6Ctfrff4XCfe2p7cbavuRuTKSPWrJICblrk2qBxm3jWOWy/+knqGY3q+Pm0YAxrdpeqDzwMYr9/TtLZc8Hg==",
+      "path": "microsoft.maui.graphics/11.0.0-rc.1.26451.6",
+      "hashPath": "microsoft.maui.graphics.11.0.0-rc.1.26451.6.nupkg.sha512"
+    },
+    "Microsoft.Maui.Platforms.Linux.Gtk4/0.1.0-preview.12.26421.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LdFWMu33SxvDxPuMqEM89qZhGGdBuywpe0heZw6AlOrcPBorQ959+Xni+wenqKCYR1M7tMZQFXp8CBC8DZ4GKQ==",
+      "path": "microsoft.maui.platforms.linux.gtk4/0.1.0-preview.12.26421.1",
+      "hashPath": "microsoft.maui.platforms.linux.gtk4.0.1.0-preview.12.26421.1.nupkg.sha512"
+    },
+    "Microsoft.Maui.Platforms.Linux.Gtk4.Essentials/0.1.0-preview.12.26421.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4qP7Y94I6Nq7r50Zf6TfwSS1e2FFUMM/V+HR3+cdG1Tk/BzZMTMcD5FIV6ug2huEmD4LEk/z3YNpAYSo6KqMSg==",
+      "path": "microsoft.maui.platforms.linux.gtk4.essentials/0.1.0-preview.12.26421.1",
+      "hashPath": "microsoft.maui.platforms.linux.gtk4.essentials.0.1.0-preview.12.26421.1.nupkg.sha512"
+    },
+    "Tmds.DBus.Protocol/0.92.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-h7IMakm0PF2jxiagoysoAjrzzLQ0UBdnSXQL5kb17YW0Fvyo12Tg96A99QkzwktWRrd7H+Uw9EzjasNLUfGYlA==",
+      "path": "tmds.dbus.protocol/0.92.0",
+      "hashPath": "tmds.dbus.protocol.0.92.0.nupkg.sha512"
+    }
+  },
+  "runtimes": {
+    "android-arm64": [
+      "android",
+      "linux-bionic-arm64",
+      "linux-bionic",
+      "linux-arm64",
+      "linux",
+      "unix-arm64",
+      "unix",
+      "any",
+      "base"
+    ],
+    "linux-arm64": [
+      "linux",
+      "unix-arm64",
+      "unix",
+      "any",
+      "base"
+    ],
+    "linux-bionic-arm64": [
+      "linux-bionic",
+      "linux-arm64",
+      "linux",
+      "unix-arm64",
+      "unix",
+      "any",
+      "base"
+    ],
+    "linux-musl-arm64": [
+      "linux-musl",
+      "linux-arm64",
+      "linux",
+      "unix-arm64",
+      "unix",
+      "any",
+      "base"
+    ]
+  }
+}

@@ -306,7 +306,7 @@ The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4
 | F5 DevFlow targets break XAML source generation on plain TFMs | [dotnet/maui-labs#520](https://github.com/dotnet/maui-labs/issues/520) |
 | F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521) |
 | F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522) |
-| F16 GTK4 loses Label font/colour CSS (last provider wins), sizes in pt | [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540) |
+| F16 GTK4 loses Label font/colour CSS (last provider wins), sizes in pt | [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540), fixed by [#541](https://github.com/dotnet/maui-labs/pull/541) |
 
 No existing issues covered these (searched open and closed issues first). F4 and F10 are already fixed on `main` and
 await a release, so nothing was filed for them.
@@ -326,3 +326,29 @@ await a release, so nothing was filed for them.
 Bump `MauiLabsVersion` in `Directory.Build.props` (and `global.json` / `MauiControlsVersion` for new .NET/MAUI drops),
 then rebuild each head and re-check F2–F7. The `maui-wpf` / `maui-linux-gtk4` templates can be re-checked with
 `dotnet new <template> -o /tmp/x && dotnet build /tmp/x`.
+
+### Raspberry Pi 5 run (2026-09-28)
+
+Target: **JunctionPi5** (10.0.0.37) — Raspberry Pi 5 Model B, 4 GB, NVMe, `aarch64`, Raspberry Pi OS **bookworm**
+(Debian 12.15), xrdp + labwc/lightdm installed, a monitor on HDMI showing the greeter, the user's live session an
+X11 session over xrdp (`:10`). The device also runs JMRI, so the OS was left untouched.
+
+- **bookworm's GTK is 4.8.3** (below the backend's 4.12 minimum) and its GLib 2.74 is below what GTK 4.12 needs,
+  so neither the distro package nor a source build was an option. Instead the head runs inside a rootless
+  **podman Debian 13 (trixie) container** (`trixie-gtk`, GTK **4.18.6**) with `--userns=keep-id --network host
+  --ipc host`, `/tmp/.X11-unix` and `$HOME` bind-mounted, `DISPLAY=:10` and `XAUTHORITY=~/.Xauthority` passed
+  in. Packages in the container: `libgtk-4-1 libgirepository-1.0-1 gir1.2-gtk-4.0 fontconfig fonts-dejavu-core
+  libicu76 ca-certificates xdotool x11-apps xauth scrot`. Host changes: `apt install podman uidmap slirp4netns
+  fuse-overlayfs` only.
+- Build: `dotnet publish src/MauiPlatforms.Gtk4 -c Release -r linux-arm64 --self-contained` on the Surface
+  (233 files, 97 MB), copied with `tar | ssh`. No .NET on the Pi at all.
+- Launch with `GSK_RENDERER=cairo GDK_BACKEND=x11`: the window appears in the xrdp session at 1024×768; image,
+  labels, Open Sans and the button all render (`docs/screenshots/` not updated; screenshots kept in the session).
+  Log noise: `MESA-LOADER: failed to retrieve device information` (no GPU in the container) and a `Gtk-WARNING`
+  about `dbus-launch` missing — both harmless.
+- Input: a plain `xdotool mousemove … click 1` at the button's screen position did **not** register even with
+  the window activated and focused; `xdotool click --window <inner-window-id>` (the 1028×800 client window
+  under the pointer, not the titled toplevel that `search --name` returns) followed by `Tab` + `Return` did —
+  the button reads "Clicked 1 time". Treat xdotool under xorgxrdp as needing the targeted form; not yet
+  isolated which of the two actions counted.
+- Not tried: the released DevFlow GTK agent (still #521), packaging targets, Wayland on the seat0 session.
