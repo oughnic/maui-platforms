@@ -12,7 +12,7 @@ when any of those move. The full incident log with evidence is in [status.md](st
 | Backend | Package | Builds | Runs | DevFlow | Notes |
 | --- | --- | :-: | :-: | :-: | --- |
 | Windows WPF | `Microsoft.Maui.Platforms.Windows.WPF` (+ `.Essentials`) | ✅ win-arm64, win-x64 | ✅ | partial | Agent connects, screenshots work; page content not in the tree, so no DevFlow taps ([#522](https://github.com/dotnet/maui-labs/issues/522)) |
-| Linux GTK4 | `Microsoft.Maui.Platforms.Linux.Gtk4` (+ `.Essentials`) | ✅ linux-arm64, linux-x64 | ✅ (Ubuntu 24.04, WSL2/WSLg) | ❌ | Agent package targets the old backend package, never starts ([#521](https://github.com/dotnet/maui-labs/issues/521)) |
+| Linux GTK4 | `Microsoft.Maui.Platforms.Linux.Gtk4` (+ `.Essentials`) | ✅ linux-arm64, linux-x64 | ✅ (Ubuntu 24.04, WSL2/WSLg) | ❌ released / ✅ fixed | Released agent targets the old backend package and never starts ([#521](https://github.com/dotnet/maui-labs/issues/521)); the fix in [#535](https://github.com/dotnet/maui-labs/pull/535) is verified with its CI packages (agent starts, full tree, taps) and awaits a release |
 | macOS AppKit | `Microsoft.Maui.Platforms.MacOS` (+ `.Essentials`) | ✅ osx-arm64 | ✅ | ✅ full | Best DevFlow support: whole tree, `ui tap --text` works; smoke-tested locally and in CI |
 
 All three backends are compiled against MAUI 10.0.41 and run unchanged on MAUI 11 RC1 with the default app. The
@@ -126,6 +126,10 @@ This is the same pattern as `samples/DevFlow.Sample.*` in dotnet/maui-labs. It w
   </PropertyGroup>
 </Project>
 ```
+
+Two override knobs (defaulting to `MauiLabsVersion`) let you try a labs PR's CI-built packages without touching
+project files: `MauiLabsDevFlowVersion` (all DevFlow agent packages) and `MauiLabsGtk4Version` (the GTK4 backend), e.g.
+`dotnet build … -p:MauiLabsDevFlowVersion=0.1.0-ci.1240.1 -p:MauiLabsGtk4Version=0.1.0-ci.1240.1 -p:RestoreAdditionalProjectSources=/path/to/nupkgs`.
 
 Heads with `UseMaui=true` (WPF, macOS) use `$(MauiVersion)` from the workload for `Microsoft.Maui.Controls`; the GTK4
 head has no workload and must pin `Microsoft.Maui.Controls` explicitly, otherwise it gets the backend's minimum
@@ -491,7 +495,8 @@ written for bash 3.2 and exits non-zero on the first failed step.
 | `NU1102 Unable to find package Microsoft.Maui.Platforms.Linux.Gtk4 with version (>= 0.6.0-0)` | labs `maui-linux-gtk4` template uses the old package's version | Pin `0.1.0-preview.12.26421.1` |
 | `CS0104 'Application' is ambiguous` in a WPF Program.cs | labs `maui-wpf` template's `using System.Windows` | Use the `MauiWPFApplication` subclass pattern above |
 | `CS0103 The name 'InitializeComponent' does not exist` in a GTK4 or macOS **Debug** build | `Microsoft.Maui.DevFlow.Agent.Core.targets` adds XAML as untyped AdditionalFiles on TFMs outside android/ios/maccatalyst/windows (#520) | `<DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>` |
-| Two GTK backends in the output (`Platform.Maui.Linux.Gtk4.dll` + `Microsoft.Maui.Platforms.Linux.Gtk4.dll`), DevFlow silent | `Microsoft.Maui.DevFlow.Agent.Gtk` depends on the superseded package (#521) | Leave the GTK agent out until it is rebuilt against the new backend |
+| Two GTK backends in the output (`Platform.Maui.Linux.Gtk4.dll` + `Microsoft.Maui.Platforms.Linux.Gtk4.dll`), DevFlow silent | `Microsoft.Maui.DevFlow.Agent.Gtk` ≤ preview.12 depends on the superseded package (#521) | Use a labs release that includes #535 (the agent then starts automatically); until then leave the GTK agent out |
+| Trying a labs PR's CI packages: `NU1605` between `0.1.0-ci.*` and released `0.1.0-preview.*` packages | Prerelease ordering: `ci` sorts below `preview`, so released companions (e.g. `…Gtk4.Essentials`) demand a "higher" backend | `-p:NoWarn=NU1605` for the test, plus `-p:RestoreAdditionalProjectSources=<folder of nupkgs>` and the `MauiLabsGtk4Version` / `MauiLabsDevFlowVersion` knobs |
 | `NotImplementedInReferenceAssemblyException` from `SemanticScreenReader.Announce` (or any Essentials call) on click | Backend Essentials not registered; the head resolves the portable `lib/net11.0` Essentials | `AddLinuxGtk4Essentials()` / `UseWPFEssentials()` / `AddMacOSEssentials()` |
 | macOS: `This version of .NET for macOS … requires Xcode 26.6` | Workload/Xcode mismatch | Install Xcode 26.6 or `-p:ValidateXcodeVersion=false` |
 | macOS: `NETSDK1147 … workloads must be installed: maui-tizen` | `UseMaui` on `net11.0-macos` needs the MAUI SDK packs | `dotnet workload install macos maui-tizen` |
@@ -508,7 +513,10 @@ written for bash 3.2 and exits non-zero on the first failed step.
 ## 13. When versions move: what to re-check
 
 - **New labs release** (bump `MauiLabsVersion`): re-check #518/#519 (templates), #520 (DevFlow XAML targets: try
-  removing `DevFlowXamlSourceMapsEnabled=false`), #521 (GTK agent: try turning `MauiGtk4DevFlow` on), #522 (WPF tree),
+  removing `DevFlowXamlSourceMapsEnabled=false`), #521 (GTK agent: once the release contains #535, turn
+  `MauiGtk4DevFlow` on by default and add a GTK4 smoke test; the GTK agent still ships no build targets, so keep the
+  `Microsoft.Maui.DevFlowProject`/`DevFlowTfm` `AssemblyMetadata` items in the head or `maui devflow list` shows
+  `"tfm": "unknown"`), #522 (WPF tree),
   and whether `Microsoft.Maui.Platforms.MacOS.Templates` is published (PR #466 merged 2026-09-02) and `maui ai init`
   shipped (PR #98/#513 merged 2026-09-22). Also whether the GTK4/WPF Essentials still need explicit registration.
 - **New .NET/MAUI drop** (bump `global.json` and `MauiControlsVersion`): re-check the macOS workload's Xcode

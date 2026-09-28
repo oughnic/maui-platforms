@@ -34,7 +34,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Platforms.MacOS" Version="$(MauiLabsVersion)" />
     <PackageReference Include="Microsoft.Maui.Platforms.MacOS.Essentials" Version="$(MauiLabsVersion)" />
-    <PackageReference Include="Microsoft.Maui.DevFlow.Agent" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent" Version="$(MauiLabsDevFlowVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
   </ItemGroup>
 

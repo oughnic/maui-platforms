@@ -11,7 +11,7 @@ Versions: .NET SDK 11.0.100-rc.1.26425.128, MAUI 11.0.0-rc.1.26451.6, maui-labs 
 | --- | --- | --- | --- | --- |
 | WPF | win-arm64 | ✅ 0 warnings | ✅ default app renders (Shell flyout, image, labels, button) | ✅ agent registers with broker, `ui tree` / `ui screenshot` work; see F7 |
 | WPF | win-x64 | ✅ cross-built on arm64 | not run (no x64 hardware here) | — |
-| GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ agent does not start with the new backend (F5/F6) |
+| GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ with released preview.12 (F5/F6); ✅ with the PR #535 CI packages: agent starts, full tree, tap works |
 | GTK4 | linux-x64 | ✅ cross-compiled | not run | — |
 | macOS AppKit | osx-arm64 | ✅ CI (`macos-26`, Xcode 26.6) and Stepney (Xcode 26.5 with `-p:ValidateXcodeVersion=false`) | ✅ default app renders (see "macOS AppKit run") | ✅ agent registers, full page in `ui tree`, `ui tap --text "Click me"` works |
 | Default app (WinUI) | win-arm64 | ✅ Windows TFM only (`-p:TargetFrameworks=net11.0-windows10.0.19041.0`) | not run | agent added |
@@ -138,6 +138,29 @@ from. So DevFlow for GTK is not usable with the new backend package until `Micro
 against `Microsoft.Maui.Platforms.Linux.Gtk4`.
 
 The GTK4 head therefore makes DevFlow opt-in: `dotnet build src/MauiPlatforms.Gtk4 -p:MauiGtk4DevFlow=true`.
+
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#535](https://github.com/dotnet/maui-labs/pull/535)
+(open).** Verified with that PR's CI artifacts (`packages-devflow-windows-latest`, version `0.1.0-ci.1240.1`) on
+WSL2 Ubuntu 24.04 arm64, GTK 4.14.5, .NET 11 RC1 / MAUI 11 RC1:
+
+```bash
+dotnet build src/MauiPlatforms.Gtk4 -r linux-arm64 -p:MauiGtk4DevFlow=true \
+  -p:MauiLabsGtk4Version=0.1.0-ci.1240.1 -p:MauiLabsDevFlowVersion=0.1.0-ci.1240.1 \
+  -p:RestoreAdditionalProjectSources=$HOME/pr535-nuget -p:NoWarn=NU1605
+```
+
+- Resolved graph: `Microsoft.Maui.Platforms.Linux.Gtk4 0.1.0-ci.1240.1`, the four DevFlow packages at the same
+  version, and no `Platform.Maui.Linux.Gtk4` anywhere (`dotnet nuget why` confirms; only one backend DLL in the output).
+- `builder.AddMauiDevFlowAgent()` alone starts the agent: `HTTP server started on port 10223`, registered with the
+  broker within 2 s (`"platform": "Linux"`), `ui tree` shows `MainPage → ScrollView → VerticalStackLayout → …`,
+  `ui tap --text "Click me"` succeeds and the button reads "Clicked 1 time"; `ui screenshot` works.
+- Two caveats of the PR-artifact test, not of the fix: the artifact has no `Microsoft.Maui.Platforms.Linux.Gtk4.Essentials`,
+  and `0.1.0-ci.*` sorts below the released `0.1.0-preview.12.*`, so keeping the released Essentials needs
+  `NoWarn=NU1605` (a real preview.13 release will not). `maui devflow list` shows `"tfm": "unknown"` because the GTK
+  agent package ships no build targets to stamp the `Microsoft.Maui.DevFlowProject`/`DevFlowTfm` assembly metadata
+  (the head now adds them itself). #520 still needs `DevFlowXamlSourceMapsEnabled=false`.
+
+Once #535 ships in a labs release, flip `MauiGtk4DevFlow` to default `true` and add a GTK4 smoke test.
 
 ### F7. DevFlow WPF agent sees the Shell chrome, not the page
 

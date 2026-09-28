@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Platforms.Windows.WPF" Version="$(MauiLabsVersion)" />
     <PackageReference Include="Microsoft.Maui.Platforms.Windows.WPF.Essentials" Version="$(MauiLabsVersion)" />
-    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.WPF" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.WPF" Version="$(MauiLabsDevFlowVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
   </ItemGroup>
 

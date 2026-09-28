@@ -12,6 +12,14 @@
   <PropertyGroup>
     <MauiLabsVersion>0.1.0-preview.12.26421.1</MauiLabsVersion>
     <MauiControlsVersion>11.0.0-rc.1.26451.6</MauiControlsVersion>
+    <!--
+      Override knobs for trying pre-release CI builds of individual labs packages (e.g. the artifacts of a dotnet/maui-labs PR)
+      without editing project files:  dotnet build ... -p:MauiLabsDevFlowVersion=0.1.0-ci.1240.1 -p:MauiLabsGtk4Version=0.1.0-ci.1240.1
+                                                       -p:RestoreAdditionalProjectSources=/path/to/nupkgs
+      DevFlow agent packages use MauiLabsDevFlowVersion; the GTK4 backend package uses MauiLabsGtk4Version; both default to MauiLabsVersion.
+    -->
+    <MauiLabsDevFlowVersion Condition="'$(MauiLabsDevFlowVersion)' == ''">$(MauiLabsVersion)</MauiLabsDevFlowVersion>
+    <MauiLabsGtk4Version Condition="'$(MauiLabsGtk4Version)' == ''">$(MauiLabsVersion)</MauiLabsGtk4Version>
   </PropertyGroup>
 
 </Project>

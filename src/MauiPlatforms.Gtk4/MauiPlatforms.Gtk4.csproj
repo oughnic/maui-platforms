@@ -38,9 +38,9 @@
   <ItemGroup>
     <!-- MAUI 11 RC explicitly: the labs package only asks for >= 10.0.41, so pin the version we are evaluating. -->
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiControlsVersion)" />
-    <PackageReference Include="Microsoft.Maui.Platforms.Linux.Gtk4" Version="$(MauiLabsVersion)" />
+    <PackageReference Include="Microsoft.Maui.Platforms.Linux.Gtk4" Version="$(MauiLabsGtk4Version)" />
     <PackageReference Include="Microsoft.Maui.Platforms.Linux.Gtk4.Essentials" Version="$(MauiLabsVersion)" />
-    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.Gtk" Version="$(MauiLabsVersion)" Condition="'$(MauiGtk4DevFlow)' == 'true'" />
+    <PackageReference Include="Microsoft.Maui.DevFlow.Agent.Gtk" Version="$(MauiLabsDevFlowVersion)" Condition="'$(MauiGtk4DevFlow)' == 'true'" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="11.0.0-*" />
   </ItemGroup>
 
@@ -52,6 +52,12 @@
     <MauiXaml Include="..\MauiPlatforms\**\*.xaml"
               Exclude="..\MauiPlatforms\Platforms\**;..\MauiPlatforms\obj\**;..\MauiPlatforms\bin\**"
               Link="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Lets `maui devflow list` report the project and TFM (the GTK agent package does not inject these itself) -->
+  <ItemGroup Condition="'$(MauiGtk4DevFlow)' == 'true'">
+    <AssemblyMetadata Include="Microsoft.Maui.DevFlowProject" Value="MauiPlatforms.Gtk4" />
+    <AssemblyMetadata Include="Microsoft.Maui.DevFlowTfm" Value="$(TargetFramework)" />
   </ItemGroup>
 
   <!-- Shared app resources (the GTK4 backend's build targets copy these into the output folder) -->
