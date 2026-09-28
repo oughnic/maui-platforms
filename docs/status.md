@@ -95,11 +95,27 @@ default app touches has broken the backends.
 The pattern used by the labs' own samples (`MauiWPFApplication` subclass + `[STAThread] Main`, `UseMauiAppWPF<App>()`,
 `UseWPFEssentials()`) works and is what `src/MauiPlatforms.Wpf` uses.
 
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#536](https://github.com/dotnet/maui-labs/pull/536)
+(open).** Verified with its CI artifact (`packages-wpf-windows-latest`, 0.1.0-ci.511.1) on the arm64 .NET 11 RC1 SDK:
+the template installed into an isolated hive generates a csproj pinning `Microsoft.Maui.Controls 10.0.41` and the
+backend/Essentials at the packed version, uses the `MauiWPFApplication` + `UseMauiAppWPF` + `UseWPFEssentials` shape,
+restores with `NU1605` as an error, builds with 0 warnings and opens a native WPF window. Side note: restoring with
+`--packages` into a long scratch path produced `MSB3106` + `CS0234` reference failures; the same project built from a
+short path with the default cache.
+
 ### F3. The `maui-linux-gtk4` template references a package version that does not exist
 
 It emits `Version="0.6.0-*"` for `Microsoft.Maui.Platforms.Linux.Gtk4` (+ Essentials). Those IDs only exist as
 `0.1.0-preview.*` on nuget.org; `0.6.0` is the last version of the *previous* package ID `Platform.Maui.Linux.Gtk4`.
 Restore fails out of the box. The head pins `$(MauiLabsVersion)` instead.
+
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#534](https://github.com/dotnet/maui-labs/pull/534)
+(open), together with the F15 Essentials registration.** Verified with its CI artifact
+(`packages-linux-gtk4-ubuntu-24.04`, 0.1.0-ci.741.1) on WSL2 Ubuntu 24.04 arm64: the generated app references backend
+and Essentials at the packed version, calls `AddLinuxGtk4Essentials()`, restores and builds (run with
+`DOTNET_ROLL_FORWARD=Major` on the .NET 11 runtime), and with a `SemanticScreenReader.Announce` call added to its click
+handler two clicks work without the F15 exception. The demonstrator's GTK4 head built against the same packages (plus
+the #535 agent) passes the DevFlow tap.
 
 ### F4. No macOS template package is published
 
@@ -179,6 +195,14 @@ the flyout/nav-bar buttons, but none of `MainPage`'s elements (Image, Labels, Bu
 finds native WPF buttons; `ui query --type Label` returns nothing. `ui hit-test 533 461` does find the button's text
 through UI Automation (`native:uia-runtime:…`), but tapping that element returns `success: false`. Screenshots and the
 agent/broker plumbing work.
+
+**Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#533](https://github.com/dotnet/maui-labs/pull/533)
+(open).** Verified with its CI artifact (`Microsoft.Maui.Platforms.Windows.WPF` + `.Essentials` 0.1.0-ci.509.1, released
+preview.12 DevFlow agent, `NoWarn=NU1605`) on the WPF head, win-arm64: `ui tree` now descends `ShellContent → MainPage →
+ScrollView → VerticalStackLayout → Image/Label/Label/Button`, `ui query` finds the page elements by type and text,
+`ui tap --text "Click me"` returns `Tapped` and the button reads "Clicked 1 time" (`docs/screenshots` not updated). The
+fix is in the backend's `ShellHandler` (`IShellContentController.GetOrCreateContent()` instead of instantiating the
+template directly). Once released, the WPF head can get the same smoke test as AppKit.
 
 ### F8. Apps built with a user-local SDK show the ".NET must be installed" dialog
 
@@ -301,11 +325,11 @@ The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4
 
 | Finding | Issue |
 | --- | --- |
-| F2 `maui-wpf` template does not restore/build | [dotnet/maui-labs#518](https://github.com/dotnet/maui-labs/issues/518) |
-| F3 `maui-linux-gtk4` template references non-existent `0.6.0-*` | [dotnet/maui-labs#519](https://github.com/dotnet/maui-labs/issues/519) |
-| F5 DevFlow targets break XAML source generation on plain TFMs | [dotnet/maui-labs#520](https://github.com/dotnet/maui-labs/issues/520) |
-| F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521) |
-| F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522) |
+| F2 `maui-wpf` template does not restore/build | [dotnet/maui-labs#518](https://github.com/dotnet/maui-labs/issues/518), fixed by [#536](https://github.com/dotnet/maui-labs/pull/536) |
+| F3 `maui-linux-gtk4` template references non-existent `0.6.0-*` (+ F15 Essentials) | [dotnet/maui-labs#519](https://github.com/dotnet/maui-labs/issues/519), fixed by [#534](https://github.com/dotnet/maui-labs/pull/534) |
+| F5 DevFlow targets break XAML source generation on plain TFMs | [dotnet/maui-labs#520](https://github.com/dotnet/maui-labs/issues/520), fixed by [#537](https://github.com/dotnet/maui-labs/pull/537) |
+| F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521), fixed by [#535](https://github.com/dotnet/maui-labs/pull/535) |
+| F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522), fixed by [#533](https://github.com/dotnet/maui-labs/pull/533) |
 | F16 GTK4 loses Label font/colour CSS (last provider wins), sizes in pt | [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540), fixed by [#541](https://github.com/dotnet/maui-labs/pull/541) |
 
 No existing issues covered these (searched open and closed issues first). F4 and F10 are already fixed on `main` and
