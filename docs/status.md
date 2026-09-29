@@ -97,7 +97,7 @@ The pattern used by the labs' own samples (`MauiWPFApplication` subclass + `[STA
 `UseWPFEssentials()`) works and is what `src/MauiPlatforms.Wpf` uses.
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#536](https://github.com/dotnet/maui-labs/pull/536)
-(open).** Verified with its CI artifact (`packages-wpf-windows-latest`, 0.1.0-ci.511.1) on the arm64 .NET 11 RC1 SDK:
+(merged to `main` 2026-09-29, no package release yet).** Verified with its CI artifact (`packages-wpf-windows-latest`, 0.1.0-ci.511.1) on the arm64 .NET 11 RC1 SDK:
 the template installed into an isolated hive generates a csproj pinning `Microsoft.Maui.Controls 10.0.41` and the
 backend/Essentials at the packed version, uses the `MauiWPFApplication` + `UseMauiAppWPF` + `UseWPFEssentials` shape,
 restores with `NU1605` as an error, builds with 0 warnings and opens a native WPF window. Side note: restoring with
@@ -111,7 +111,7 @@ It emits `Version="0.6.0-*"` for `Microsoft.Maui.Platforms.Linux.Gtk4` (+ Essent
 Restore fails out of the box. The head pins `$(MauiLabsVersion)` instead.
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#534](https://github.com/dotnet/maui-labs/pull/534)
-(open), together with the F15 Essentials registration.** Verified with its CI artifact
+(merged to `main` 2026-09-29, no package release yet), together with the F15 Essentials registration.** Verified with its CI artifact
 (`packages-linux-gtk4-ubuntu-24.04`, 0.1.0-ci.741.1) on WSL2 Ubuntu 24.04 arm64: the generated app references backend
 and Essentials at the packed version, calls `AddLinuxGtk4Essentials()`, restores and builds (run with
 `DOTNET_ROLL_FORWARD=Major` on the .NET 11 runtime), and with a `SemanticScreenReader.Announce` call added to its click
@@ -137,12 +137,12 @@ unaffected because `net11.0-windows` takes the other branch.
 Workaround in `src/MauiPlatforms.Gtk4/MauiPlatforms.Gtk4.csproj`: `<DevFlowXamlSourceMapsEnabled>false</DevFlowXamlSourceMapsEnabled>`.
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#537](https://github.com/dotnet/maui-labs/pull/537)
-(open).** Verified with its CI artifact (`Microsoft.Maui.DevFlow.*` 0.1.0-ci.1242.1): with the
+(merged to `main` 2026-09-29, no package release yet).** Verified with its CI artifact (`Microsoft.Maui.DevFlow.*` 0.1.0-ci.1242.1): with the
 `DevFlowXamlSourceMapsEnabled=false` line removed, Debug builds of both the GTK4 head (Agent.Core ci.1242.1 alongside the
 #535 GTK agent/backend ci.1240.1, WSL2 Ubuntu 24.04 arm64) and the AppKit head (Stepney, Xcode 26.5) generate all five
 `*.xaml.sg.cs` partials, run, and pass the DevFlow tap ("Clicked 1 time"). The new target hooks `AfterTargets="_MauiInjectXamlCssAdditionalFiles"`
 and checks `UsingMicrosoftMauiControlsSdk` at execution time instead of a platform allow-list. Remove the workaround from
-both heads once #537 ships.
+both heads once a labs release contains #537 (merged 2026-09-29).
 
 **Also hits `net11.0-macos`** (the AppKit head): `macos` is missing from the same TFM list, so a Debug build on the Mac
 produced the identical six CS0103 errors. Release builds are unaffected because the source maps are Debug-only
@@ -167,7 +167,7 @@ against `Microsoft.Maui.Platforms.Linux.Gtk4`.
 The GTK4 head therefore makes DevFlow opt-in: `dotnet build src/MauiPlatforms.Gtk4 -p:MauiGtk4DevFlow=true`.
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#535](https://github.com/dotnet/maui-labs/pull/535)
-(open).** Verified with that PR's CI artifacts (`packages-devflow-windows-latest`, version `0.1.0-ci.1240.1`) on
+(merged to `main` 2026-09-29, no package release yet).** Verified with that PR's CI artifacts (`packages-devflow-windows-latest`, version `0.1.0-ci.1240.1`) on
 WSL2 Ubuntu 24.04 arm64, GTK 4.14.5, .NET 11 RC1 / MAUI 11 RC1:
 
 ```bash
@@ -198,12 +198,12 @@ through UI Automation (`native:uia-runtime:…`), but tapping that element retur
 agent/broker plumbing work.
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#533](https://github.com/dotnet/maui-labs/pull/533)
-(open).** Verified with its CI artifact (`Microsoft.Maui.Platforms.Windows.WPF` + `.Essentials` 0.1.0-ci.509.1, released
+(merged to `main` 2026-09-29, no package release yet).** Verified with its CI artifact (`Microsoft.Maui.Platforms.Windows.WPF` + `.Essentials` 0.1.0-ci.509.1, released
 preview.12 DevFlow agent, `NoWarn=NU1605`) on the WPF head, win-arm64: `ui tree` now descends `ShellContent → MainPage →
 ScrollView → VerticalStackLayout → Image/Label/Label/Button`, `ui query` finds the page elements by type and text,
 `ui tap --text "Click me"` returns `Tapped` and the button reads "Clicked 1 time" (`docs/screenshots` not updated). The
 fix is in the backend's `ShellHandler` (`IShellContentController.GetOrCreateContent()` instead of instantiating the
-template directly). Once released, the WPF head can get the same smoke test as AppKit.
+template directly). Once a labs release contains it (merged 2026-09-29), the WPF head can get the same smoke test as AppKit.
 
 ### F8. Apps built with a user-local SDK show the ".NET must be installed" dialog
 
@@ -307,7 +307,7 @@ makes the headline render in Open Sans at 256 × 59, i.e. exactly the last-provi
 Buttons and other CSS-styled controls are affected the same way (the button text stays at the default size).
 
 **Update 2026-09-28 — fixed upstream in [dotnet/maui-labs#541](https://github.com/dotnet/maui-labs/pull/541)
-(open).** Verified with its CI packages (`Microsoft.Maui.Platforms.Linux.Gtk4` + `.Essentials` 0.1.0-ci.747.1, with
+(merged to `main` 2026-09-29, no package release yet).** Verified with its CI packages (`Microsoft.Maui.Platforms.Linux.Gtk4` + `.Essentials` 0.1.0-ci.747.1, with
 the #535 GTK agent) on WSL2 Ubuntu 24.04 arm64: the headline measures 192 × 44 (AppKit: 200 × 43) and renders in Open
 Sans, the button keeps its styled text (964 × 44), and DevFlow tap still works. The PR composes CSS per widget/selector/
 mapper in one reused provider (`GtkCssStyles`) with latest-update precedence, clears fragments on reset and disconnect,
@@ -332,6 +332,10 @@ The pre-existing WSL Ubuntu 20.04 has no GTK4 packages; Ubuntu 24.04 ships GTK 4
 | F6 DevFlow GTK agent depends on the superseded backend package | [dotnet/maui-labs#521](https://github.com/dotnet/maui-labs/issues/521), fixed by [#535](https://github.com/dotnet/maui-labs/pull/535) |
 | F7 DevFlow WPF agent omits page content under Shell | [dotnet/maui-labs#522](https://github.com/dotnet/maui-labs/issues/522), fixed by [#533](https://github.com/dotnet/maui-labs/pull/533) |
 | F16 GTK4 loses Label font/colour CSS (last provider wins), sizes in pt | [dotnet/maui-labs#540](https://github.com/dotnet/maui-labs/issues/540), fixed by [#541](https://github.com/dotnet/maui-labs/pull/541) |
+
+**2026-09-29:** all six PRs were merged to `main` between 09:39 and 09:57 UTC and the issues closed. nuget.org still has
+0.1.0-preview.12.26421.1 and the `dotnet10` nightly feed is older still, so the fixes are not yet in any package; the
+follow-ups in the playbook ("when versions move") wait for the next labs release.
 
 No existing issues covered these (searched open and closed issues first). F4 and F10 are already fixed on `main` and
 await a release, so nothing was filed for them.
