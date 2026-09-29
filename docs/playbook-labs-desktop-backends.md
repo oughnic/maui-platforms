@@ -11,14 +11,16 @@ when any of those move. The full incident log with evidence is in [status.md](st
 
 | Backend | Package | Builds | Runs | DevFlow | Notes |
 | --- | --- | :-: | :-: | :-: | --- |
-| Windows WPF | `Microsoft.Maui.Platforms.Windows.WPF` (+ `.Essentials`) | ✅ win-arm64, win-x64 | ✅ | partial | Agent connects, screenshots work; page content not in the tree, so no DevFlow taps ([#522](https://github.com/dotnet/maui-labs/issues/522)) |
+| Windows WPF | `Microsoft.Maui.Platforms.Windows.WPF` (+ `.Essentials`) | ✅ win-arm64, win-x64 | ✅ | partial released / ✅ fixed | Agent connects, screenshots work; with the released backend the page content is not in the tree, so no DevFlow taps ([#522](https://github.com/dotnet/maui-labs/issues/522)); the fix in [#533](https://github.com/dotnet/maui-labs/pull/533) is verified with its CI packages (full tree, taps) and awaits a release |
 | Linux GTK4 | `Microsoft.Maui.Platforms.Linux.Gtk4` (+ `.Essentials`) | ✅ linux-arm64, linux-x64 | ✅ (Ubuntu 24.04, WSL2/WSLg) | ❌ released / ✅ fixed | Released agent targets the old backend package and never starts ([#521](https://github.com/dotnet/maui-labs/issues/521)); the fix in [#535](https://github.com/dotnet/maui-labs/pull/535) is verified with its CI packages (agent starts, full tree, taps) and awaits a release |
 | macOS AppKit | `Microsoft.Maui.Platforms.MacOS` (+ `.Essentials`) | ✅ osx-arm64 | ✅ | ✅ full | Best DevFlow support: whole tree, `ui tap --text` works; smoke-tested locally and in CI |
 
 All three backends are compiled against MAUI 10.0.41 and run unchanged on MAUI 11 RC1 with the default app. The
 labs project templates (`maui-wpf`, `maui-linux-gtk4`) are broken as shipped ([#518](https://github.com/dotnet/maui-labs/issues/518),
-[#519](https://github.com/dotnet/maui-labs/issues/519)) and there is no published macOS template package yet, so do
-not start from the templates: start from the head projects in section 6–8, which are copy-paste ready.
+[#519](https://github.com/dotnet/maui-labs/issues/519); fixed by [#536](https://github.com/dotnet/maui-labs/pull/536)
+and [#534](https://github.com/dotnet/maui-labs/pull/534), both verified with their CI packages and awaiting a release)
+and there is no published macOS template package yet, so do not start from the templates: start from the head projects
+in section 6–8, which are copy-paste ready.
 
 ## 2. The shape that works: thin head projects that link the shared app
 
@@ -465,9 +467,9 @@ Register the agent in every head (`#if DEBUG`), start `maui devflow broker start
 | | WPF | GTK4 | AppKit |
 | --- | --- | --- | --- |
 | Agent package | `Microsoft.Maui.DevFlow.Agent.WPF` | `Microsoft.Maui.DevFlow.Agent.Gtk` (opt-in) | `Microsoft.Maui.DevFlow.Agent` |
-| Registers with broker | ✅ (`platform: "WPF"`) | ❌ never starts (#521) | ✅ (`platform: "macOS"`) |
-| `ui tree` | Shell chrome only, page missing (#522) | — | full tree down to the layouts |
-| `ui tap --text` | ❌ (`hit-test` finds text via UIA, tap is a no-op) | — | ✅ |
+| Registers with broker | ✅ (`platform: "WPF"`) | ❌ never starts (#521; ✅ with #535) | ✅ (`platform: "macOS"`) |
+| `ui tree` | Shell chrome only, page missing (#522; ✅ full tree with #533) | — (✅ with #535) | full tree down to the layouts |
+| `ui tap --text` | ❌ (`hit-test` finds text via UIA, tap is a no-op; ✅ with #533) | — (✅ with #535) | ✅ |
 | `ui screenshot` | ✅ | — | ✅ |
 | Real input for tests | UI Automation `InvokePattern` or a real click | `xdotool` with `GDK_BACKEND=x11` under WSLg | DevFlow |
 
@@ -533,16 +535,19 @@ written for bash 3.2 and exits non-zero on the first failed step.
 | WSL: `libEGL warning … ZINK: failed to choose pdev` | No usable GPU for GTK's GL renderer | Harmless; `GSK_RENDERER=cairo` to silence |
 | WSL: GTK4 packages missing / too old | Ubuntu < 24.04 | Install `Ubuntu-24.04` |
 | `maui doctor`: "Windows SDK not found" with VS 2026 installed | Doctor's check, not the build | Ignore; WinUI builds get the SDK from NuGet |
-| WPF: `ui tap --text` finds nothing, `query --type Label` empty | WPF agent stops at `ShellContainerView` (#522) | Drive WPF with UI Automation or real clicks; screenshots still work |
+| WPF: `ui tap --text` finds nothing, `query --type Label` empty | The WPF backend's `ShellHandler` instantiated the page template without registering it with Shell, so the agent stops at `ShellContainerView` (#522) | Fixed by [#533](https://github.com/dotnet/maui-labs/pull/533) (verified: full tree, tap → "Clicked 1 time"); until it ships, drive WPF with UI Automation or real clicks; screenshots still work |
+| `dotnet new maui-wpf` / `maui-linux-gtk4` output does not restore or build (NU1102 `0.6.0-*`, NU1605, CS0104 `Application`) | Templates ship stale/floating package versions and the wrong bootstrap (#518, #519) | Fixed by [#536](https://github.com/dotnet/maui-labs/pull/536) and [#534](https://github.com/dotnet/maui-labs/pull/534) (verified; #534 also adds `AddLinuxGtk4Essentials()` to the template); until they ship, use the heads in sections 6–7 |
 | GTK4: every Label/Button renders at the theme default size and font although `FontSize`/`FontFamily` are set | `GtkViewHandler.ApplyCss` keeps only the last property's CSS provider (CharacterSpacing's `letter-spacing: 0px` overwrites the font); sizes are also emitted in `pt` instead of `px` (status.md F16, [#540](https://github.com/dotnet/maui-labs/issues/540)) | Fixed by [#541](https://github.com/dotnet/maui-labs/pull/541) (verified: headline 192 × 44 in Open Sans); until it ships, a head-side `LabelHandler.Mapper.AppendToMapping(nameof(ILabel.CharacterSpacing), MapFont)` restores size/family but loses TextColor |
 
 ## 13. When versions move: what to re-check
 
-- **New labs release** (bump `MauiLabsVersion`): re-check #518/#519 (templates), #520 (DevFlow XAML targets: try
-  removing `DevFlowXamlSourceMapsEnabled=false`), #521 (GTK agent: once the release contains #535, turn
+- **New labs release** (bump `MauiLabsVersion`): re-check #518/#519 (templates, fixed by #536/#534: the templates
+  become a valid starting point again), #520 (DevFlow XAML targets, fixed by #537: remove
+  `DevFlowXamlSourceMapsEnabled=false` from both heads), #521 (GTK agent, fixed by #535: turn
   `MauiGtk4DevFlow` on by default and add a GTK4 smoke test; the GTK agent still ships no build targets, so keep the
   `Microsoft.Maui.DevFlowProject`/`DevFlowTfm` `AssemblyMetadata` items in the head or `maui devflow list` shows
-  `"tfm": "unknown"`), #522 (WPF tree), #540/#541 (GTK4 label fonts/colours: re-check the screenshots),
+  `"tfm": "unknown"`), #522 (WPF tree, fixed by #533: add a WPF smoke test), #540/#541 (GTK4 label fonts/colours:
+  re-check the screenshots),
   and whether `Microsoft.Maui.Platforms.MacOS.Templates` is published (PR #466 merged 2026-09-02) and `maui ai init`
   shipped (PR #98/#513 merged 2026-09-22). Also whether the GTK4/WPF Essentials still need explicit registration.
 - **New .NET/MAUI drop** (bump `global.json` and `MauiControlsVersion`): re-check the macOS workload's Xcode

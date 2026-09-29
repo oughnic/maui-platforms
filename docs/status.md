@@ -9,7 +9,7 @@ Versions: .NET SDK 11.0.100-rc.1.26425.128, MAUI 11.0.0-rc.1.26451.6, maui-labs 
 
 | Head | RID | Restore/build | Run | DevFlow |
 | --- | --- | --- | --- | --- |
-| WPF | win-arm64 | ✅ 0 warnings | ✅ default app renders (Shell flyout, image, labels, button) | ✅ agent registers with broker, `ui tree` / `ui screenshot` work; see F7 |
+| WPF | win-arm64 | ✅ 0 warnings | ✅ default app renders (Shell flyout, image, labels, button) | ✅ agent registers with broker, `ui tree` / `ui screenshot` work; page missing from the tree with released preview.12 (F7); ✅ full tree and tap with the PR #533 CI packages |
 | WPF | win-x64 | ✅ cross-built on arm64 | not run (no x64 hardware here) | — |
 | GTK4 | linux-arm64 | ✅ compiled on Windows and on Ubuntu 24.04 | ✅ default app renders under WSLg (see "GTK4 run") | ❌ with released preview.12 (F5/F6); ✅ with the PR #535 CI packages: agent starts, full tree, tap works |
 | GTK4 | linux-x64 | ✅ cross-compiled | not run | — |
@@ -68,9 +68,10 @@ Two things the CI runner taught that a Mac with a logged-in user hides:
   (`open -n --stdout … --stderr … MauiPlatforms.app`) fixes it; the script also nudges with `osascript … activate`.
 - macOS's `/bin/bash` is 3.2, where `"${arr[@]}"` on an empty array under `set -u` aborts the script. Plain strings only.
 
-Only the AppKit head has a smoke test for now: DevFlow cannot tap the WPF head's page (F7, maui-labs#522) and the GTK4
-agent does not start (F6, maui-labs#521). Both heads were exercised by hand instead (real mouse click on WPF, xdotool
-on GTK4 under X11) and count clicks correctly.
+Only the AppKit head has a smoke test for now: with the released packages DevFlow cannot tap the WPF head's page (F7,
+maui-labs#522) and the GTK4 agent does not start (F6, maui-labs#521). Both heads were exercised by hand instead (real
+mouse click on WPF, xdotool on GTK4 under X11) and count clicks correctly. Both gaps are fixed upstream (#533, #535) and
+verified with the PR CI packages; the smoke tests follow once a labs release contains them.
 
 ## Findings
 

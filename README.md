@@ -14,7 +14,7 @@ packages taken from nuget.org.
 
 | Head | Target | Builds | Runs | DevFlow | Notes |
 | --- | --- | :-: | :-: | :-: | --- |
-| `MauiPlatforms.Wpf` | win-arm64 | ✅ | ✅ | ✅ | Default app renders correctly; DevFlow agent connects, screenshot/tree work, page content is not in the tree ([details](docs/status.md)) |
+| `MauiPlatforms.Wpf` | win-arm64 | ✅ | ✅ | partial → ✅ | Default app renders correctly; DevFlow agent connects, screenshot/tree work, but the released backend leaves the page content out of the tree; the fix in [maui-labs#533](https://github.com/dotnet/maui-labs/pull/533) is verified with its CI packages (full tree, tap works) and awaits a release ([details](docs/status.md)) |
 | `MauiPlatforms.Wpf` | win-x64 | ✅ | ➖ | ➖ | Cross-built on the arm64 machine and built natively by CI on `windows-latest`; not yet run on x64 hardware |
 | `MauiPlatforms.Gtk4` | linux-arm64 | ✅ | ✅ | ❌ → ✅ | Built and run in WSL2 Ubuntu 24.04 (GTK 4.14); renders the page but no Shell navigation bar, and text ignores the app's font sizes/family (backend CSS bug, finding F16). The released GTK DevFlow agent targets the old backend package; the fix in [maui-labs#535](https://github.com/dotnet/maui-labs/pull/535) is verified with its CI packages (agent starts, full tree, tap works) and awaits a release ([details](docs/status.md)) |
 | `MauiPlatforms.Gtk4` | linux-x64 | ✅ | ➖ | ❌ → ✅ | Cross-compiled and built natively by CI on `ubuntu-24.04`; not yet run on x64 hardware |
