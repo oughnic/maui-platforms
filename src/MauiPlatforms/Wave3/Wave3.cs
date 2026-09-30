@@ -13,12 +13,12 @@ public static class Wave3
 {
 	public static string Mode => Environment.GetEnvironmentVariable("WAVE3")?.ToLowerInvariant() ?? "";
 	public static bool Auto => Environment.GetEnvironmentVariable("WAVE3_AUTO") == "1";
-	public static string LogPath => Path.Combine(Path.GetTempPath(), "wave3.log");
+	public static string LogPath => System.IO.Path.Combine(System.IO.Path.GetTempPath(), "wave3.log");
 
 	public static void Log(string line)
 	{
 		Console.WriteLine(line);
-		try { File.AppendAllText(LogPath, line + Environment.NewLine); } catch { }
+		try { System.IO.File.AppendAllText(LogPath, line + Environment.NewLine); } catch { }
 	}
 
 	public static void WhenLoaded(Page page, Action action)
