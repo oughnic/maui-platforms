@@ -484,3 +484,6 @@ $RECYCLE.BIN/
 # Claude Code per-user overrides
 .claude/settings.local.json
 
+
+# Publish output (self-contained builds copied to test devices); never commit
+/out/
