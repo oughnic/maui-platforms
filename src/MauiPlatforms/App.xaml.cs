@@ -11,6 +11,6 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new AppShell());
+		return new Window(Wave3.Wave3.CreateShell() ?? new AppShell());
 	}
 }

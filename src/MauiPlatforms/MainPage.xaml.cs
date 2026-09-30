@@ -7,7 +7,10 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+		Wave3.Wave3.WhenLoaded(this, () => Wave3.Wave3.RunD23(D23Host, D23Out));
 	}
+
+	private void OnD23Clicked(object? sender, EventArgs e) => Wave3.Wave3.RunD23(D23Host, D23Out);
 
 	private void OnCounterClicked(object? sender, EventArgs e)
 	{

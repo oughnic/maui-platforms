@@ -28,6 +28,15 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Fill" />
+
+            <!-- checks/wave3: D23 picker repro -->
+            <Button
+                x:Name="D23Btn"
+                Text="Run D23 picker check"
+                Clicked="OnD23Clicked"
+                HorizontalOptions="Fill" />
+            <Label x:Name="D23Out" Text="D23: not run" />
+            <VerticalStackLayout x:Name="D23Host" />
         </VerticalStackLayout>
     </ScrollView>
 
